@@ -1,3 +1,13 @@
+// brushDynamics
+let smoothDist = [0, 0, 0, 0, 0];
+const reducer = (accumulator, currentValue) => accumulator + currentValue;
+let velocity = 0;
+let x = 100,
+  y = 100,
+  dragLength = 3,
+  angle1 = 0;
+let vec = [];
+
 // stages are used to track each set of dots
 let stage = 1;
 
@@ -88,6 +98,8 @@ function setup() {
   drawLayer.stroke(10);
   drawLayer.strokeWeight(20);
 
+  // vector array used to store points, this will max out at 100
+  resetVectorStore();
 
 }
 
@@ -137,6 +149,7 @@ function sizeWindow() {
 
 
 function mouseDragged() {
+    calcDynamics();
 
   brushIt(mouseX, mouseY, pmouseX, pmouseY);
 //  drawLayer.line(mouseX, mouseY, pmouseX, pmouseY);
@@ -145,6 +158,37 @@ function mouseDragged() {
   return false;
 }
 
+
+function touchEnded() {
+  resetVectorStore();
+}
+
+function resetVectorStore() {
+  for (let i = 0; i < 1000; i++) {
+    vec[i] = 0;
+  }
+}
+
+function calcDynamics() {
+
+  // calculate the distance between mouse position, and previous position. Average the previous
+  let d = dist(mouseX, mouseY, pmouseX, pmouseY);
+  smoothDist.shift();
+  smoothDist.push(d);
+  velocity = smoothDist.reduce(reducer) / smoothDist.length;
+
+
+  // calculate mouseDirection
+  let dx = mouseX - x;
+  let dy = mouseY - y;
+
+  angle1 = atan2(dy, dx);
+  x = (mouseX) - cos(angle1) * dragLength;
+  x2 = (100) - cos(PI / 2) * 1;
+  y = (mouseY) - sin(angle1) * dragLength;
+  y2 = (100) - sin(PI / 2) * 1;
+
+}
 
 function render() {
   background(200);
@@ -167,11 +211,6 @@ function handleVisibilityChange() {
 
 document.addEventListener("visibilitychange", handleVisibilityChange, false);
 
-
-
-getPressure = function(ev) {
-  return ((ev.touches && ev.touches[0] && typeof ev.touches[0]["force"] !== "undefined") ? ev.touches[0]["force"] : 1.0);
-}
 
 
 // Dot class, not used in intro
@@ -368,44 +407,114 @@ function stage5grid() {
 }
 
 function brushIt(_x, _y, pX, pY) {
-  if (brushSelected === 3) {
-    drawLayer.strokeWeight(constrain(abs((_y + _x) - (pX + pY)), 2, 3)); // for line work
-    drawLayer.stroke(60, 60, 60, 50);
-    for (i = 0; i < 10; i++) {
-      let randX = randomGaussian(-6, 6);
-      let randY = randomGaussian(-6, 6);
-      drawLayer.line(_x + randX, _y + randY, pX + randX, pY + randY);
-    }
-  }
   if (brushSelected === 0) {
-    drawLayer.strokeWeight(constrain(abs((_y + _x) - (pX + pY)), 3, 5)); // for line work
-    drawLayer.stroke(10, 10, 10, 120);
-    drawLayer.line(_x, _y, pX, pY);
-  }
-  if (brushSelected === 1) {
-    drawLayer.strokeWeight(constrain(abs((_y + _x) - (pX + pY)), 14, 15)); // for line work
-    drawLayer.stroke(20, 20, 20, 80);
-    drawLayer.line(_x, _y, pX, pY);
-  } else if (brushSelected === 4) {
-    drawLayer.strokeWeight(abs(random(0, 4)));
-    for (i = 0; i < 60; i++) {
-      let tempCol = abs(random(200, 255));
-      drawLayer.stroke(tempCol, tempCol, tempCol, 100);
-      drawLayer.point(_x + randomGaussian(-10, 10), _y + randomGaussian(-10, 10));
-    }
-  } else if (brushSelected === 5) {
-    drawLayer.strokeWeight(constrain(abs((_y + _x) - (pX + pY)), 30, 40)); // for line work
-    drawLayer.stroke(255, 255, 255, 35);
-    drawLayer.line(_x, _y, pX, pY);
+    brush_pencil(_x, _y, pX, pY, 50, velocity, 0);
+  } else if (brushSelected === 1) {
+        brush_pencil2(_x, _y, pX, pY, 50, velocity, 0);
   } else if (brushSelected === 2) {
-    drawLayer.strokeWeight(constrain(abs((_y + _x) - (pX + pY)), 50, 60)); // for line work
-    drawLayer.stroke(100, 100, 100, 50);
-    drawLayer.line(_x, _y, pX, pY);
-  } else if (brushSelected === 6) {
-    drawLayer.blendMode(REMOVE);
-
-    drawLayer.image(eraseAlpha, _x - 50, _y - 50, 100, 100);
-    drawLayer.blendMode(BLEND);
-
+    brush_scatter1(_x, _y, 10, 10, 10, 10) //_x, _y, qty, spread, pSize, colRand
+  } else if (brushSelected === 3) {
+    brush_lineScatter(_x, _y, pX, pY, 10, 4, 1, 255); // _x, _y, pX, pY, qty, spread, pSize, col
+  } else if (brushSelected === 4) {
+    brush_lineScatter(_x, _y, pX, pY, 30, 5, 10, 10); // _x, _y, pX, pY, qty, spread, pSize, col
+  } else if (brushSelected === 5) {
+    brush_rake(x, y, x2, y2, angle1, 50, 10, 101, 5) // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
   }
+}
+function brush_pencil(_x, _y, pX, pY, t, v, c) {
+   v = constrain(v, 3, 10);
+  let v0 = createVector(_x, _y);
+  let v1 = createVector(pX, pY);
+  drawLayer.stroke(c,105);
+  drawLayer.strokeWeight(1);
+  for (let i = 0; i < 200; i++) {
+     let v3 = p5.Vector.lerp(v0, v1, random(0, 1));
+    drawLayer.point(v3.x + ((noise(_x+i)-0.5)*v), v3.y + ((noise(_y+i)-0.5)*v));
+  }
+  drawLayer.stroke(c, 30);
+  drawLayer.strokeWeight(3);
+  for (let i = 0; i < 2; i++) {
+   let v3 = p5.Vector.lerp(v0, v1, random(0, 1));
+    drawLayer.point(v3.x + random(-v, v), v3.y + random(-v, v));
+  }
+}
+
+function brush_pencil2(_x, _y, pX, pY, t, v) {
+  v = constrain(v, 0, 50);
+  let v0 = createVector(_x, _y);
+  let v1 = createVector(pX, pY);
+  drawLayer.stroke(0, 10);
+  drawLayer.strokeWeight(1);
+  for (let i = 0; i < 100; i++) {
+    drawLayer.line(v0.x + ((noise(_x+i)-0.5)*v), v0.y + ((noise(_y+i)-0.5)*v), v1.x + ((noise(_x+i)-0.5)*v), v1.y + ((noise(_y+i)-0.5)*v));
+  }
+  drawLayer.stroke(100);
+  drawLayer.strokeWeight(random(1, 3));
+  for (let i = 0; i < 20; i++) {
+   let v3 = p5.Vector.lerp(v0, v1, random(0, 1));
+    drawLayer.point(v3.x + ((noise(pX-i)-0.5)*v*2), v3.y + ((noise(pY-i)-0.5)*v*2));
+  }
+}
+
+
+function brush_scatter1(_x, _y, qty, spread, pSize, colRand) {
+  spread = spread * random(0.5, 1);
+  drawLayer.fill(0, 200);
+  drawLayer.noStroke();
+  qty = qty * random(0, 1);
+  pSize = pSize * random(0.2, 1);
+  for (let i = 0; i < qty; i++) {
+    let rX = randomGaussian(spread, spread/2);
+    let rY = randomGaussian(spread, spread/2);
+    drawLayer.ellipse(_x + (rX), _y + (rY), pSize, pSize);
+  }
+}
+
+function brush_lineScatter(_x, _y, pX, pY, qty, spread, pSize, colRand) {
+  drawLayer.strokeWeight(pSize); // for line work
+  drawLayer.stroke(0, colRand);
+  for (i = 0; i < qty; i++) {
+    let rX = randomGaussian(-spread, spread);
+    let rY = randomGaussian(-spread, spread);
+    drawLayer.line(_x + rX, _y + rY, pX + rX, pY + rY);
+  }
+}
+
+function brush_rake(x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise) {
+
+  strokeW = ceil(brushWidth / qtyOfLines);
+  drawLayer.strokeWeight(strokeW);
+
+  var a = createVector(x, y);
+  var b = createVector(0, brushWidth / 2);
+  b.rotate(angle);
+  var c = p5.Vector.add(a, b);
+  a.sub(b);
+
+  for (var i = 0; i < qtyOfLines; i++) {
+    // cool
+    // d = p5.Vector.lerp(a, c, (i/qtyOfLines)*random(0,1));
+
+    d = p5.Vector.lerp(a, c, (i / (qtyOfLines + 1)) + randomGaussian(0, (1 / qtyOfLines) * noise));
+
+
+    if (i === 0 || i === vec.length - 1 || (i % 3) === 2) { // if first line, last line or every 3rd line, then thin, else fat
+      drawLayer.strokeWeight(strokeW / 2);
+    } else {
+      drawLayer.strokeWeight(strokeW);
+    }
+
+    var n = vec[i];
+    if (i % 3 === 0) {
+      drawLayer.stroke(40, opacity);
+    } else if (i % 3 === 1) {
+      drawLayer.stroke(200, opacity);
+    } else if (i % 3 === 2) {
+      drawLayer.stroke(40, opacity);
+    }
+
+    drawLayer.line(vec[i].x, vec[i].y, d.x, d.y);
+    vec[i] = d;
+  }
+
 }
