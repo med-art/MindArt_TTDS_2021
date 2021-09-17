@@ -236,11 +236,12 @@ function calcDynamics() {
 
 function render() {
   background(80);
-  image(drawLayer, 0, 0);
-  image(lineLayer, 0, 0);
   for (let i = 0; i < dotsCount; i++) {
     dots[i].show();
   }
+  image(drawLayer, 0, 0);
+  image(lineLayer, 0, 0);
+
 }
 
 
@@ -319,7 +320,7 @@ function stage2grid() {
   let gap;
   let remainder;
   if (stage === 1) {
-    dotQty = 50;
+    dotQty = 200;
     r = vMax * 0.3;
     gap = circleRad * 0.9;
     remainder = circleRad - gap;
@@ -333,9 +334,10 @@ function stage2grid() {
   for (let i = 0; i < dotQty; i++) {
     let rotateVal = i * 137.5;
     let tran = (((gap) / dotQty) * (i + 1)) + remainder;
+    tran *= 2;
     let tempX = (tran * cos(radians(rotateVal))) + width / 2;
     let tempY = (tran * sin(radians(rotateVal))) + height / 2;
-    r = r + ((i / 10000) * vMax);
+    r = r + ((i / 100000) * vMax);
     dots[dotsCount++] = new Dot(tempX, tempY, r);
   }
 }

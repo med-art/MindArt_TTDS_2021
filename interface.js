@@ -1,4 +1,4 @@
-let colArray = ["#000000" , "#444444", "#888888", "#a1a1a1", "#c2c2c2", "#ffffff","#000000"];
+let colArray = ["#000000" , "#444444", "#888888", "#a1a1a1", "#c2c2c2", "#ffffff","#ffffff"];
 let button, selColour;
 let numSwatch = 6;
   let swatch = [];
@@ -7,6 +7,7 @@ function writeTextUI() {
 
   $(".interface").remove();
   $(".select").remove();
+  $(".box").remove();
 
   textSize(vMax*2);
   fill(0);
@@ -30,8 +31,8 @@ function writeTextUI() {
   // TODO - fading buttons
   for (let i = 0; i < numSwatch + 1; i++){
       swatch[i] = createButton("");
-      swatch[i].position((i*7) * vMax, height - (6 * vMax));
-      swatch[i].size(7 * vMax, 15 * vMax);
+      swatch[i].position((i*6) * vMax, height - (6 * vMax));
+      swatch[i].size(6 * vMax, 15 * vMax);
       swatch[i].style("background-color", colArray[i]);
         swatch[i].style("border", "1px solid black");
       swatch[i].class("box");
@@ -40,19 +41,46 @@ function writeTextUI() {
 
 
 
+    let i = 6;
+    swatch[6].style("border-radius", "0.25vmax");
+      swatch[6].size(8 * vMax, 15 * vMax);
+
+
+
+// write another little box - this could be better
+    swatch[7] = createButton("");
+    swatch[7].position((i*6) * vMax, height - (4 * vMax));
+    swatch[7].size(9 * vMax, 15 * vMax);
+    swatch[7].style("background-color", colArray[1]);
+      // eraser.style("border", "1px solid black");
+swatch[7].class("box");
+swatch[7].style("border-radius", 0);
+    swatch[7].mousePressed(function(){selectAbrush(6);});
 }
 
 function selectAbrush(i){
 
     for (let j = 0; j < numSwatch + 1; j++){
-      swatch[j].position((j*7) * vMax, height - (6 * vMax));
+      swatch[j].position((j*6) * vMax, height - (6 * vMax));
              swatch[j].style("border", "1px dotted grey");
+
+
+
+
+
     }
 
-    swatch[i].position((i*7) * vMax, height - (12 * vMax));
-           swatch[i].style("border", "8px inset grey");
+    swatch[i].position((i*6) * vMax, height - (12 * vMax));
+           swatch[i].style("border", "5px inset grey");
 
+           //nudge the eraser over
+swatch[6].position(swatch[6].x+(0.5 * vMax), swatch[6].y);
+ swatch[6].style("border", "1px inset grey");
+
+// change the brush
             changeBrush(i+1)
+
+
 }
 
 
