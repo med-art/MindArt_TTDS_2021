@@ -1,6 +1,6 @@
-let colArray = ["#000000", "#444444", "#888888", "#a1a1a1", "#c2c2c2", "#ffffff"];
+let colArray = ["#000000" , "#444444", "#888888", "#a1a1a1", "#c2c2c2", "#ffffff","#000000"];
 let button, selColour;
-let numSwatch = 4;
+let numSwatch = 6;
   let swatch = [];
 
 function writeTextUI() {

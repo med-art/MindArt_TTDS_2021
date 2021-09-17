@@ -157,17 +157,16 @@ function sizeWindow() {
   nextDrawing();
 }
 
-function mousePressed(){
+function mousePressed() {
   fadeIn = 0;
 }
 
 function mouseDragged() {
 
 
-//  fade the UI out
-
+  //  fade the UI out
   if (buttonOpacity > 0) {
-      buttonOpacity = buttonOpacity - 0.01;
+    buttonOpacity = buttonOpacity - 0.01;
     let buttons = document.getElementsByClassName("box");
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].style.opacity = buttonOpacity;
@@ -186,7 +185,7 @@ function mouseDragged() {
 function touchEnded() {
   resetVectorStore();
   fadeIn = 1;
-  drawLayer.image(lineLayer,0,0,width,height);
+  drawLayer.image(lineLayer, 0, 0, width, height);
   lineLayer.clear();
   lineArray = [];
 }
@@ -195,17 +194,17 @@ function touchEnded() {
 
 function draw() {
   // fade the UI in
-if (fadeIn){
-  if (buttonOpacity < 1.1) {
-    buttonOpacity = buttonOpacity + 0.01;
-    let buttons = document.getElementsByClassName("box");
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].style.opacity = buttonOpacity;
+  if (fadeIn) {
+    if (buttonOpacity < 1.1) {
+      buttonOpacity = buttonOpacity + 0.01;
+      let buttons = document.getElementsByClassName("box");
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].style.opacity = buttonOpacity;
+      }
+    } else {
+      fadeIn = 0;
     }
-  } else {
-    fadeIn = 0;
   }
-}
 }
 
 function resetVectorStore() {
@@ -236,7 +235,7 @@ function calcDynamics() {
 }
 
 function render() {
-  background(60);
+  background(80);
   image(drawLayer, 0, 0);
   image(lineLayer, 0, 0);
   for (let i = 0; i < dotsCount; i++) {
@@ -291,7 +290,7 @@ function nextDrawing() {
   }
 
   stage++;
-  stage = stage%2;
+  stage = stage % 2;
   render();
 }
 
@@ -314,24 +313,6 @@ function stage1grid() {
   }
 }
 
-// function stage2grid() {
-//   let r = vMax;
-//   if (stage === 1) {
-//     dotQty = 7;
-//     ringQty = 3;
-//     r = vMax * 0.75;
-//   }
-//   for (let i = 0; i < ringQty; i++) {
-//     for (let j = 0; j < dotQty + (i * 3); j++) {
-//       let rotateVal = j * (360 / (dotQty + (i * 3)));
-//       let tran = (circleRad / ringQty) * (i + 1);
-//       let tempX = (tran * cos(radians(rotateVal))) + width / 2;
-//       let tempY = (tran * sin(radians(rotateVal))) + height / 2;
-//       r = r - (r / 100);
-//       dots[dotsCount++] = new Dot(tempX, tempY, r);
-//     }
-//   }
-// }
 
 function stage2grid() {
   let r = vMax;
@@ -343,18 +324,18 @@ function stage2grid() {
     gap = circleRad * 0.9;
     remainder = circleRad - gap;
   }
-  if (stage === 10) {
-    dotQty = 100;
-    r = vMax * 0.5;
-    gap = circleRad * 0.7;
-    remainder = circleRad - gap;
-  }
+  // if (stage === 10) {
+  //   dotQty = 100;
+  //   r = vMax * 0.5;
+  //   gap = circleRad * 0.7;
+  //   remainder = circleRad - gap;
+  // }
   for (let i = 0; i < dotQty; i++) {
     let rotateVal = i * 137.5;
     let tran = (((gap) / dotQty) * (i + 1)) + remainder;
     let tempX = (tran * cos(radians(rotateVal))) + width / 2;
     let tempY = (tran * sin(radians(rotateVal))) + height / 2;
-    r = r + ((i / 40000) * vMax);
+    r = r + ((i / 10000) * vMax);
     dots[dotsCount++] = new Dot(tempX, tempY, r);
   }
 }
@@ -362,16 +343,20 @@ function stage2grid() {
 function brushIt(_x, _y, pX, pY) {
   if (brushSelected === 0) {
     brush_pencil(_x, _y, pX, pY, 50, velocity, 0);
-  } else if (brushSelected === 1) {
-brush_lineScatter(_x, _y, pX, pY, 30, 5, 10, 10); // _x, _y, pX, pY, qty, spread, pSize, col
+  }
+  if (brushSelected === 1) {
+      brush_dottedLine(_x, _y, pX, pY, 35, 1);
   } else if (brushSelected === 2) {
-    brush_dottedLine(_x, _y, pX, pY);
-    // brush_lineScatter(_x, _y, pX, pY, 1, 6, 3, 120); // _x, _y, pX, pY, qty, spread, pSize, col
-} else if (brushSelected === 3) {
-        brush_rake(x, y, x2, y2, angle1, 50, 10, 101, 5) // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
-}else if (brushSelected === 4) {
-        brush_rake(x, y, x2, y2, angle1, 200, 6, 25, 150) // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
-}
+    brush_lineScatter(_x, _y, pX, pY, 6, 3.5, 10, 50); // _x, _y, pX, pY, qty, spread, pSize, col
+  } else if (brushSelected === 3) {
+    brush_pencil(_x, _y, pX, pY, 50, velocity, 200);
+  } else if (brushSelected === 4) {
+    brush_dottedLine(_x, _y, pX, pY, 180, 0);
+  } else if (brushSelected === 5) {
+    brush_rake(x, y, x2, y2, angle1, 50, 10, 101, 5) // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
+  } else if (brushSelected === 6) {
+    brush_erase(_x, _y, pX, pY); // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
+  }
 }
 
 function brush_pencil(_x, _y, pX, pY, t, v, c) {
@@ -392,20 +377,26 @@ function brush_pencil(_x, _y, pX, pY, t, v, c) {
   }
 }
 
-function brush_dottedLine(_x, _y, pX, pY){
+function brush_dottedLine(_x, _y, pX, pY, c, version) {
 
   let v1 = createVector(_x, _y);
   lineArray.push(v1)
-  lineRender();
+  lineRender(c, version);
 }
 
-function lineRender(){
-  lineLayer.drawingContext.setLineDash([1, 15]);
-  lineLayer.stroke(150);
+function lineRender(c, version) {
+  if (version){
+  lineLayer.drawingContext.setLineDash([5, 15]);
+    lineLayer.strokeWeight(4);
+  } else {
+  lineLayer.drawingContext.setLineDash([1, 20]);
+    lineLayer.strokeWeight(6);
+}
+  lineLayer.stroke(c, 255);
   lineLayer.noFill();
-  lineLayer.strokeWeight(6);
+
   lineLayer.beginShape();
-  for (let i = 0; i < lineArray.length; i++){
+  for (let i = 0; i < lineArray.length; i++) {
     curveVertex(lineArray[i].x, lineArray[i].y)
   }
   lineLayer.endShape();
@@ -436,7 +427,7 @@ function brush_scatter1(_x, _y, qty, spread, pSize, colRand, v, pX, pY) {
   let v1 = createVector(pX, pY);
   for (let i = 0; i < 20; i++) {
     drawLayer.stroke(random(0, 40), 100);
-      drawLayer.strokeWeight(random(1, 5));
+    drawLayer.strokeWeight(random(1, 5));
     let v3 = p5.Vector.lerp(v0, v1, random(0, 1));
     drawLayer.point(v3.x + ((noise(pX - i) - 0.5) * v), v3.y + ((noise(pY - i) - 0.5) * v));
   }
@@ -489,4 +480,11 @@ function brush_rake(x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise)
     vec[i] = d;
   }
 
+}
+
+
+function brush_erase(_x, _y, pX, pY) {
+  drawLayer.erase();
+  drawLayer.ellipse(_x, _y,40, 40)
+  drawLayer.noErase();
 }
