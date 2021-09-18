@@ -162,7 +162,8 @@ function mousePressed() {
 }
 
 function mouseDragged() {
-
+//stop fadein
+        fadeIn = 0;
 
   //  fade the UI out
   if (buttonOpacity > 0) {
@@ -491,7 +492,6 @@ function brush_rake(x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise)
     drawLayer.line(vec[i].x, vec[i].y, d.x, d.y);
     vec[i] = d;
   }
-
 }
 
 
