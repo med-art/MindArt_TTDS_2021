@@ -367,7 +367,7 @@ function brushIt(_x, _y, pX, pY) {
   } else if (brushSelected === 5) {
     brush_rake(x, y, x2, y2, angle1, 50, 10, 150, 5) // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
   } else if (brushSelected === 6) {
-    brush_erase(_x, _y, pX, pY); 
+    brush_erase(_x, _y, pX, pY);
   }
 }
 
@@ -497,6 +497,7 @@ function brush_rake(x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise)
 
 function brush_erase(_x, _y, pX, pY) {
   drawLayer.erase();
-  drawLayer.ellipse(_x, _y, 26, 26);
+  drawLayer.strokeWeight(20);
+  drawLayer.line(_x, _y, pX, pY);
   drawLayer.noErase();
 }
