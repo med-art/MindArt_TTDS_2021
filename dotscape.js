@@ -297,21 +297,31 @@ function nextDrawing() {
 
 function stage1grid() {
   dots = [];
-  if (stage === 0) {
-    dotQtyX = 4;
-    dotQtyY = 13 * 4;
-    r = vMax * 0.3;
-    let spaceX = width / dotQtyX + 2;
-    let spaceY = height / dotQtyY + 2;
-    for (let i = 0; i < dotQtyX; i++) {
-      for (let j = 0; j < dotQtyY; j += 4) {
-        dots[dotsCount++] = new Dot(((i + 0.5) * spaceX) - (spaceX / 6), (j + 0.5) * spaceY, r);
-        dots[dotsCount++] = new Dot(((i + 0.5) * spaceX) + (spaceX / 6), (j + 0.5) * spaceY, r);
-        dots[dotsCount++] = new Dot(((i + 0.5) * spaceX) - (spaceX / 3), (j + 0.5) * spaceY + (spaceY * 2), r);
-        dots[dotsCount++] = new Dot(((i + 0.5) * spaceX) + ((spaceX / 6) * 2), (j + 0.5) * spaceY + (spaceY * 2), r);
+
+  // calculate amount of x's and y's to include
+  let r = vMax / 2.3;
+  let qtyX = 12; // quantiy along X
+  let qtyY = 10;
+  let spaceX = width / qtyX;
+  let spaceY = height / qtyY;
+  console.log(spaceX, spaceY);
+
+
+
+
+  for (let i = 1; i < qtyX; i++) {
+    for (let j = 0; j < qtyY; j++) {
+      if (i % 2) {
+        dots[dotsCount++] = new Dot((spaceX * i), (spaceY * (j + 0.5)), r);
+      } else {
+        if (!(j == qtyY-1)) {
+          dots[dotsCount++] = new Dot((spaceX * i), (spaceY * (j + 1)), r);
+        }
       }
     }
   }
+
+
 }
 
 
@@ -320,9 +330,9 @@ function stage2grid() {
   let gap;
   let remainder;
   if (stage === 1) {
-    dotQty = 200;
+    dotQty = 300;
     r = vMax * 0.3;
-    gap = circleRad * 0.9;
+    gap = circleRad * 0.95;
     remainder = circleRad - gap;
   }
   // if (stage === 10) {
@@ -334,7 +344,7 @@ function stage2grid() {
   for (let i = 0; i < dotQty; i++) {
     let rotateVal = i * 137.5;
     let tran = (((gap) / dotQty) * (i + 1)) + remainder;
-    tran *= 2;
+    tran *= 3; // extend past the frame
     let tempX = (tran * cos(radians(rotateVal))) + width / 2;
     let tempY = (tran * sin(radians(rotateVal))) + height / 2;
     r = r + ((i / 100000) * vMax);
@@ -347,17 +357,17 @@ function brushIt(_x, _y, pX, pY) {
     brush_pencil(_x, _y, pX, pY, 50, velocity, 0);
   }
   if (brushSelected === 1) {
-      brush_dottedLine(_x, _y, pX, pY, 35, 1);
+    brush_dottedLine(_x, _y, pX, pY, 35, 1);
   } else if (brushSelected === 2) {
-    brush_lineScatter(_x, _y, pX, pY, 6, 3.5, 10, 50); // _x, _y, pX, pY, qty, spread, pSize, col
+    brush_lineScatter(_x, _y, pX, pY, 6, 3.5, 10, 95); // _x, _y, pX, pY, qty, spread, pSize, col
   } else if (brushSelected === 3) {
-    brush_pencil(_x, _y, pX, pY, 50, velocity, 200);
+    brush_pencil(_x, _y, pX, pY, 50, velocity, 120);
   } else if (brushSelected === 4) {
     brush_dottedLine(_x, _y, pX, pY, 180, 0);
   } else if (brushSelected === 5) {
-    brush_rake(x, y, x2, y2, angle1, 50, 10, 101, 5) // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
+    brush_rake(x, y, x2, y2, angle1, 50, 10, 150, 5) // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
   } else if (brushSelected === 6) {
-    brush_erase(_x, _y, pX, pY); // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
+    brush_erase(_x, _y, pX, pY); 
   }
 }
 
@@ -387,13 +397,13 @@ function brush_dottedLine(_x, _y, pX, pY, c, version) {
 }
 
 function lineRender(c, version) {
-  if (version){
-  lineLayer.drawingContext.setLineDash([5, 15]);
+  if (version) {
+    lineLayer.drawingContext.setLineDash([5, 15]);
     lineLayer.strokeWeight(4);
   } else {
-  lineLayer.drawingContext.setLineDash([1, 20]);
+    lineLayer.drawingContext.setLineDash([1, 20]);
     lineLayer.strokeWeight(6);
-}
+  }
   lineLayer.stroke(c, 255);
   lineLayer.noFill();
 
@@ -471,11 +481,11 @@ function brush_rake(x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise)
 
     var n = vec[i];
     if (i % 3 === 0) {
-      drawLayer.stroke(40, opacity);
+      drawLayer.stroke(100, opacity);
     } else if (i % 3 === 1) {
-      drawLayer.stroke(200, opacity);
+      drawLayer.stroke(255, opacity);
     } else if (i % 3 === 2) {
-      drawLayer.stroke(40, opacity);
+      drawLayer.stroke(100, opacity);
     }
 
     drawLayer.line(vec[i].x, vec[i].y, d.x, d.y);
@@ -487,6 +497,6 @@ function brush_rake(x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise)
 
 function brush_erase(_x, _y, pX, pY) {
   drawLayer.erase();
-  drawLayer.ellipse(_x, _y,40, 40)
+  drawLayer.ellipse(_x, _y, 26, 26);
   drawLayer.noErase();
 }
