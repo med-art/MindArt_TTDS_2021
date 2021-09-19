@@ -302,7 +302,7 @@ function stage1grid() {
   // calculate amount of x's and y's to include
   let r = vMax / 2.3;
   let qtyX = 12; // quantiy along X
-  let qtyY = 10;
+  let qtyY = 8;
   let spaceX = width / qtyX;
   let spaceY = height / qtyY;
   console.log(spaceX, spaceY);
@@ -312,13 +312,7 @@ function stage1grid() {
 
   for (let i = 1; i < qtyX; i++) {
     for (let j = 0; j < qtyY; j++) {
-      if (i % 2) {
-        dots[dotsCount++] = new Dot((spaceX * i), (spaceY * (j + 0.5)), r);
-      } else {
-        if (!(j == qtyY-1)) {
-          dots[dotsCount++] = new Dot((spaceX * i), (spaceY * (j + 1)), r);
-        }
-      }
+          dots[dotsCount++] = new Dot((spaceX * i), (spaceY * (j + 0.5)), r);
     }
   }
 
@@ -355,14 +349,14 @@ function stage2grid() {
 
 function brushIt(_x, _y, pX, pY) {
   if (brushSelected === 0) {
-    brush_pencil(_x, _y, pX, pY, 50, velocity, 0);
+    brush_pencil(_x, _y, pX, pY, 70, velocity, 0);
   }
   if (brushSelected === 1) {
     brush_dottedLine(_x, _y, pX, pY, 35, 1);
   } else if (brushSelected === 2) {
     brush_lineScatter(_x, _y, pX, pY, 6, 3.5, 10, 95); // _x, _y, pX, pY, qty, spread, pSize, col
   } else if (brushSelected === 3) {
-    brush_pencil(_x, _y, pX, pY, 50, velocity, 120);
+    brush_pencil(_x, _y, pX, pY, 80, velocity, 170);
   } else if (brushSelected === 4) {
     brush_dottedLine(_x, _y, pX, pY, 180, 0);
   } else if (brushSelected === 5) {
@@ -378,7 +372,7 @@ function brush_pencil(_x, _y, pX, pY, t, v, c) {
   let v1 = createVector(pX, pY);
   drawLayer.stroke(c, 145);
   drawLayer.strokeWeight(1);
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < t; i++) {
     let v3 = p5.Vector.lerp(v0, v1, random(0, 1));
     drawLayer.point(v3.x + ((noise(_x + i) - 0.5) * v), v3.y + ((noise(_y + i) - 0.5) * v));
   }
