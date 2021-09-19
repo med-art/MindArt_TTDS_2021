@@ -81,7 +81,7 @@ function start() {
   // }
   sizeWindow();
   writeTextUI();
-  selectAbrush(0);
+  selectAbrush(1);
 
   reset();
 }
@@ -332,12 +332,7 @@ function stage2grid() {
     gap = circleRad * 0.95;
     remainder = circleRad - gap;
   }
-  // if (stage === 10) {
-  //   dotQty = 100;
-  //   r = vMax * 0.5;
-  //   gap = circleRad * 0.7;
-  //   remainder = circleRad - gap;
-  // }
+
   for (let i = 0; i < dotQty; i++) {
     let rotateVal = i * 137.5;
     let tran = (((gap) / dotQty) * (i + 1)) + remainder;
@@ -350,20 +345,20 @@ function stage2grid() {
 }
 
 function brushIt(_x, _y, pX, pY) {
-  if (brushSelected === 0) {
+  if (brushSelected === 1) {
     brush_pencil(_x, _y, pX, pY, 70, velocity, 0);
   }
-  if (brushSelected === 1) {
+  if (brushSelected === 2) {
     brush_dottedLine(_x, _y, pX, pY, 35, 1);
-  } else if (brushSelected === 2) {
-    brush_lineScatter(_x, _y, pX, pY, 40, 6.5, 2, 100); // _x, _y, pX, pY, qty, spread, pSize, col
   } else if (brushSelected === 3) {
-    brush_pencil(_x, _y, pX, pY, 80, velocity, 255);
-  } else if (brushSelected === 6) {
-    brush_dottedLine(_x, _y, pX, pY, 170, 0);
-  } else if (brushSelected === 5) {
-    brush_rake(x, y, x2, y2, angle1, 50, 11, 200, 3, velocity) // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
+    brush_lineScatter(_x, _y, pX, pY, 120, 6.5, 2, 55); // _x, _y, pX, pY, qty, spread, pSize, col
   } else if (brushSelected === 4) {
+    brush_pencil(_x, _y, pX, pY, 80, velocity, 255);
+  } else if (brushSelected === 5) {
+    brush_dottedLine(_x, _y, pX, pY, 200, 0);
+  } else if (brushSelected === 6) {
+    brush_rake(x, y, x2, y2, angle1, 50, 11, 140, 3, velocity) // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
+  } else if (brushSelected === 0) {
     brush_erase(_x, _y, pX, pY);
   }
 }
@@ -482,7 +477,7 @@ function brush_rake(x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise,
     if (i % 3 === 0) {
       drawLayer.stroke(100, opacity);
     } else if (i % 3 === 1) {
-      drawLayer.stroke(255, opacity);
+      drawLayer.stroke(215, opacity);
     } else if (i % 3 === 2) {
       drawLayer.stroke(100, opacity);
     }
