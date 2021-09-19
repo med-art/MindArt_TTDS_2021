@@ -372,7 +372,7 @@ function brush_pencil(_x, _y, pX, pY, t, v, c) {
   let v1 = createVector(pX, pY);
   drawLayer.stroke(c, 145);
   drawLayer.strokeWeight(1);
-  for (let i = 0; i < t; i++) {
+  for (let i = 0; i < int(velocity*15); i++) {
     let v3 = p5.Vector.lerp(v0, v1, random(0, 1));
     drawLayer.point(v3.x + ((noise(_x + i) - 0.5) * v), v3.y + ((noise(_y + i) - 0.5) * v));
   }
