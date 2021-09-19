@@ -326,7 +326,7 @@ function stage2grid() {
   let remainder;
   if (stage === 1) {
     dotQty = 300;
-    r = vMax * 0.3;
+    r = vMax * 0.2;
     gap = circleRad * 0.95;
     remainder = circleRad - gap;
   }
@@ -355,13 +355,13 @@ function brushIt(_x, _y, pX, pY) {
     brush_dottedLine(_x, _y, pX, pY, 35, 1);
   } else if (brushSelected === 2) {
     brush_lineScatter(_x, _y, pX, pY, 40, 6.5, 2, 100); // _x, _y, pX, pY, qty, spread, pSize, col
-  } else if (brushSelected === 3) {
-    brush_pencil(_x, _y, pX, pY, 80, velocity, 170);
-  } else if (brushSelected === 4) {
-    brush_dottedLine(_x, _y, pX, pY, 180, 0);
   } else if (brushSelected === 5) {
-    brush_rake(x, y, x2, y2, angle1, 50, 11, 250, 3, velocity) // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
+    brush_pencil(_x, _y, pX, pY, 80, velocity, 255);
   } else if (brushSelected === 6) {
+    brush_dottedLine(_x, _y, pX, pY, 180, 0);
+  } else if (brushSelected === 3) {
+    brush_rake(x, y, x2, y2, angle1, 50, 11, 200, 3, velocity) // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
+  } else if (brushSelected === 4) {
     brush_erase(_x, _y, pX, pY);
   }
 }
