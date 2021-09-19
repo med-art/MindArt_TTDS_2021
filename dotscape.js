@@ -301,8 +301,8 @@ function stage1grid() {
 
   // calculate amount of x's and y's to include
   let r = vMax / 2.3;
-  let qtyX = 12; // quantiy along X
-  let qtyY = 8;
+  let qtyX = 20; // quantiy along X
+  let qtyY = 14;
   let spaceX = width / qtyX;
   let spaceY = height / qtyY;
   console.log(spaceX, spaceY);
