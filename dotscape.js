@@ -451,7 +451,7 @@ function brush_lineScatter(_x, _y, pX, pY, qty, spread, pSize, colRand) {
 
 function brush_rake(x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise, v) {
 
-  v = map(constrain(v, 1, 10), 0, 10, 0.5, 2);
+  v = map(constrain(v, 1, 10), 0, 10, 0.5, 1.5);
 
   brushWidth = brushWidth*v;
   strokeW = ceil(brushWidth / qtyOfLines);
