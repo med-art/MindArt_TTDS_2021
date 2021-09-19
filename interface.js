@@ -21,11 +21,13 @@ function writeTextUI() {
 
   // TODO - fading buttons
   for (let i = 0; i < numSwatch + 1; i++) {
+    tint(40*i);
     swatch[i] = createImg('assets/Brush '+(i+1)+'.svg');
-
-    swatch[i].position((i * 6) * vMax, height - (7 * vMax));
+    noTint();
+    swatch[i].position((i * 6) * vMax, height - (8 * vMax));
     swatch[i].size(6 * vMax, 15 * vMax);
     // swatch[i].style("background-color", colArray[i]);
+    // swatch[i].style("border", "1px solid black");
     // swatch[i].style("border", "1px solid black");
     swatch[i].class("box");
     swatch[i].mousePressed(function() {
@@ -50,11 +52,11 @@ function writeTextUI() {
 
 function selectAbrush(i) {
   for (let j = 0; j < numSwatch + 1; j++) {
-    swatch[j].position((j * 6) * vMax, height - (7 * vMax));
+    swatch[j].position((j * 6) * vMax, height - (8 * vMax));
     //swatch[j].style("border", "1px dotted grey");
   }
 
-  swatch[i].position((i * 6) * vMax, height - (12 * vMax));
+  swatch[i].position((i * 6) * vMax, height - (13 * vMax));
   //swatch[i].style("border", "5px inset grey");
 
   //nudge the eraser over
