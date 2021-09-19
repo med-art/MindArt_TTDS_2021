@@ -354,25 +354,25 @@ function brushIt(_x, _y, pX, pY) {
   if (brushSelected === 1) {
     brush_dottedLine(_x, _y, pX, pY, 35, 1);
   } else if (brushSelected === 2) {
-    brush_lineScatter(_x, _y, pX, pY, 6, 3.5, 10, 95); // _x, _y, pX, pY, qty, spread, pSize, col
+    brush_lineScatter(_x, _y, pX, pY, 40, 6.5, 2, 100); // _x, _y, pX, pY, qty, spread, pSize, col
   } else if (brushSelected === 3) {
     brush_pencil(_x, _y, pX, pY, 80, velocity, 170);
   } else if (brushSelected === 4) {
     brush_dottedLine(_x, _y, pX, pY, 180, 0);
   } else if (brushSelected === 5) {
-    brush_rake(x, y, x2, y2, angle1, 50, 10, 150, 5) // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
+    brush_rake(x, y, x2, y2, angle1, 50, 11, 250, 3, velocity) // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
   } else if (brushSelected === 6) {
     brush_erase(_x, _y, pX, pY);
   }
 }
 
 function brush_pencil(_x, _y, pX, pY, t, v, c) {
-  v = constrain(v, 2, 20);
+  v = constrain(v, 2, 40);
   let v0 = createVector(_x, _y);
   let v1 = createVector(pX, pY);
   drawLayer.stroke(c, 145);
   drawLayer.strokeWeight(1);
-  for (let i = 0; i < int(velocity*15); i++) {
+  for (let i = 0; i < int(velocity*10); i++) {
     let v3 = p5.Vector.lerp(v0, v1, random(0, 1));
     drawLayer.point(v3.x + ((noise(_x + i) - 0.5) * v), v3.y + ((noise(_y + i) - 0.5) * v));
   }
@@ -385,7 +385,6 @@ function brush_pencil(_x, _y, pX, pY, t, v, c) {
 }
 
 function brush_dottedLine(_x, _y, pX, pY, c, version) {
-
   let v1 = createVector(_x, _y);
   lineArray.push(v1)
   lineRender(c, version);
@@ -393,11 +392,11 @@ function brush_dottedLine(_x, _y, pX, pY, c, version) {
 
 function lineRender(c, version) {
   if (version) {
-    lineLayer.drawingContext.setLineDash([5, 15]);
+    lineLayer.drawingContext.setLineDash([7, 18]);
     lineLayer.strokeWeight(4);
   } else {
     lineLayer.drawingContext.setLineDash([1, 20]);
-    lineLayer.strokeWeight(6);
+    lineLayer.strokeWeight(7);
   }
   lineLayer.stroke(c, 255);
   lineLayer.noFill();
@@ -450,8 +449,11 @@ function brush_lineScatter(_x, _y, pX, pY, qty, spread, pSize, colRand) {
   }
 }
 
-function brush_rake(x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise) {
+function brush_rake(x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise, v) {
 
+  v = map(constrain(v, 1, 10), 0, 10, 0.5, 2);
+
+  brushWidth = brushWidth*v;
   strokeW = ceil(brushWidth / qtyOfLines);
   drawLayer.strokeWeight(strokeW);
 
