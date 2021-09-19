@@ -133,9 +133,11 @@ function reset() {
 function dimensionCalc() {
   if (width > height) {
     vMax = width / 100;
+    vMin = height / 100;
     circleRad = height * 0.45;
   } else {
     vMax = height / 100;
+    vMin = width / 100;
     circleRad = width * 0.45;
   }
 }
@@ -300,9 +302,9 @@ function stage1grid() {
   dots = [];
 
   // calculate amount of x's and y's to include
-  let r = vMax / 2.3;
-  let qtyX = 20; // quantiy along X
-  let qtyY = 14;
+  let r = vMax / 3.2;
+  let qtyX = vMax*1.3; // quantiy along X
+  let qtyY = vMin*1.3;
   let spaceX = width / qtyX;
   let spaceY = height / qtyY;
   console.log(spaceX, spaceY);
@@ -326,7 +328,7 @@ function stage2grid() {
   let remainder;
   if (stage === 1) {
     dotQty = 300;
-    r = vMax * 0.2;
+    r = vMax * 0.25;
     gap = circleRad * 0.95;
     remainder = circleRad - gap;
   }
@@ -355,11 +357,11 @@ function brushIt(_x, _y, pX, pY) {
     brush_dottedLine(_x, _y, pX, pY, 35, 1);
   } else if (brushSelected === 2) {
     brush_lineScatter(_x, _y, pX, pY, 40, 6.5, 2, 100); // _x, _y, pX, pY, qty, spread, pSize, col
-  } else if (brushSelected === 5) {
+  } else if (brushSelected === 3) {
     brush_pencil(_x, _y, pX, pY, 80, velocity, 255);
   } else if (brushSelected === 6) {
-    brush_dottedLine(_x, _y, pX, pY, 180, 0);
-  } else if (brushSelected === 3) {
+    brush_dottedLine(_x, _y, pX, pY, 170, 0);
+  } else if (brushSelected === 5) {
     brush_rake(x, y, x2, y2, angle1, 50, 11, 200, 3, velocity) // x, y, x2, y2, angle, qtyOfLines, brushWidth, opacity, noise
   } else if (brushSelected === 4) {
     brush_erase(_x, _y, pX, pY);
