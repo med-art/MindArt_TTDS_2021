@@ -65,26 +65,19 @@ let pointStore;
 
 let brushSelected = 1;
 
-function preload() {
-  //
-  // audio = loadSound('assets/audio.mp3');
-  // click = loadSound('assets/click.mp3');
-}
+//FIREBASE STUFF
+var database;
 
 function start() {
   $(".startBtn").remove();
   fullscreen(1);
-  // note currently everything resets on windowResized. Unsure if this is logical yet
-
-  // if (audio.isPlaying()) {} else {
-  //   audio.loop(1);
-  // }
   sizeWindow();
   writeTextUI();
   selectAbrush(1);
-
   reset();
 }
+
+
 
 function setup() {
   // create canvas and all layers
@@ -111,6 +104,21 @@ function setup() {
 
   // vector array used to store points, this will max out at 100
   resetVectorStore();
+
+  //firebaseStuff
+
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCcsg-O-13sb_sOHRACVDeSdMoeYTaV9Qk",
+    authDomain: "thinkdraw-a7a5c.firebaseapp.com",
+    projectId: "thinkdraw-a7a5c",
+    storageBucket: "thinkdraw-a7a5c.appspot.com",
+    messagingSenderId: "477283263624",
+    appId: "1:477283263624:web:3afe9b5a02f04143ed6b3d"
+  };
+
+
+ const app = initializeApp(firebaseConfig);
 
 }
 
@@ -351,7 +359,7 @@ function brushIt(_x, _y, pX, pY) {
   if (brushSelected === 2) {
     brush_dottedLine(_x, _y, pX, pY, 35, 1);
   } else if (brushSelected === 3) {
-    brush_lineScatter(_x, _y, pX, pY, 120, 6.5, 2, 55); // _x, _y, pX, pY, qty, spread, pSize, col
+    brush_lineScatter(_x, _y, pX, pY, 120, 6.5, 2, 55, velocity); // _x, _y, pX, pY, qty, spread, pSize, col
   } else if (brushSelected === 4) {
     brush_pencil(_x, _y, pX, pY, 80, velocity, 255);
   } else if (brushSelected === 5) {
@@ -436,7 +444,8 @@ function brush_scatter1(_x, _y, qty, spread, pSize, colRand, v, pX, pY) {
   }
 }
 
-function brush_lineScatter(_x, _y, pX, pY, qty, spread, pSize, colRand) {
+function brush_lineScatter(_x, _y, pX, pY, qty, spread, pSize, colRand, velocity) {
+  spread = constrain(spread*(velocity/20), spread*0.8, spread*1.2);
   drawLayer.strokeWeight(pSize); // for line work
   drawLayer.stroke(colRand, colRand);
   for (i = 0; i < qty; i++) {
