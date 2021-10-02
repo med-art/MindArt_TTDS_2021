@@ -77,6 +77,25 @@ function start() {
   reset();
 }
 
+// // Import the functions you need from the SDKs you need
+// import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+// import { getStorage } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-storage.js";
+// // TODO: Add SDKs for Firebase products that you want to use
+// // https://firebase.google.com/docs/web/setup#available-libraries
+//
+// // Your web app's Firebase configuration
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCcsg-O-13sb_sOHRACVDeSdMoeYTaV9Qk",
+//   authDomain: "thinkdraw-a7a5c.firebaseapp.com",
+//   projectId: "thinkdraw-a7a5c",
+//   storageBucket: "thinkdraw-a7a5c.appspot.com",
+//   messagingSenderId: "477283263624",
+//   appId: "1:477283263624:web:3afe9b5a02f04143ed6b3d"
+// };
+//
+// // Initialize Firebase
+// const firebaseApp = initializeApp(firebaseConfig);
+// const storage = getStorage(firebaseApp);
 
 
 function setup() {
@@ -105,22 +124,23 @@ function setup() {
   // vector array used to store points, this will max out at 100
   resetVectorStore();
 
-  //firebaseStuff
-
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCcsg-O-13sb_sOHRACVDeSdMoeYTaV9Qk",
-    authDomain: "thinkdraw-a7a5c.firebaseapp.com",
-    projectId: "thinkdraw-a7a5c",
-    storageBucket: "thinkdraw-a7a5c.appspot.com",
-    messagingSenderId: "477283263624",
-    appId: "1:477283263624:web:3afe9b5a02f04143ed6b3d"
-  };
-
-
- const app = initializeApp(firebaseConfig);
+  // uploadBlob('assets/E47DF2.png');
 
 }
+
+// function uploadBlob(file) {
+//   const ref = firebaseApp.ref().child('some-child');
+//
+//   // [START storage_upload_blob]
+//   // 'file' comes from the Blob or File API
+//   ref.put(file).then((snapshot) => {
+//     console.log('Uploaded a blob or file!');
+//   });
+//   // [END storage_upload_blob]
+// }
+
+
+
 
 function reset() {
 
@@ -246,7 +266,7 @@ function calcDynamics() {
 }
 
 function render() {
-  background(80);
+  background(10);
   for (let i = 0; i < dotsCount; i++) {
     dots[i].show();
   }
@@ -279,7 +299,7 @@ class Dot {
   }
   show() {
     noStroke();
-    fill(0, 100);
+    fill(255, 100);
     ellipse(this.x, this.y, this.r * 2);
   }
 }
@@ -354,12 +374,12 @@ function stage2grid() {
 
 function brushIt(_x, _y, pX, pY) {
   if (brushSelected === 1) {
-    brush_pencil(_x, _y, pX, pY, 70, velocity, 0);
+    brush_pencil(_x, _y, pX, pY, 70, velocity, 60);
   }
   if (brushSelected === 2) {
-    brush_dottedLine(_x, _y, pX, pY, 35, 1);
+    brush_dottedLine(_x, _y, pX, pY, 90, 1);
   } else if (brushSelected === 3) {
-    brush_lineScatter(_x, _y, pX, pY, 120, 6.5, 2, 55, velocity); // _x, _y, pX, pY, qty, spread, pSize, col
+    brush_lineScatter(_x, _y, pX, pY, 50, 6.5, 2, 120, velocity); // _x, _y, pX, pY, qty, spread, pSize, col
   } else if (brushSelected === 4) {
     brush_pencil(_x, _y, pX, pY, 80, velocity, 255);
   } else if (brushSelected === 5) {
