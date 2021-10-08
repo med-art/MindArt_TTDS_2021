@@ -13,7 +13,7 @@ let buttonOpacity = 1;
 let inverter = 0;
 
 let lineArray = [];
-
+let dotsCount = 0;
 
 
 // stages are used to track each set of dots
@@ -77,25 +77,7 @@ function start() {
   reset();
 }
 
-// // Import the functions you need from the SDKs you need
-// import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
-// import { getStorage } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-storage.js";
-// // TODO: Add SDKs for Firebase products that you want to use
-// // https://firebase.google.com/docs/web/setup#available-libraries
-//
-// // Your web app's Firebase configuration
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCcsg-O-13sb_sOHRACVDeSdMoeYTaV9Qk",
-//   authDomain: "thinkdraw-a7a5c.firebaseapp.com",
-//   projectId: "thinkdraw-a7a5c",
-//   storageBucket: "thinkdraw-a7a5c.appspot.com",
-//   messagingSenderId: "477283263624",
-//   appId: "1:477283263624:web:3afe9b5a02f04143ed6b3d"
-// };
-//
-// // Initialize Firebase
-// const firebaseApp = initializeApp(firebaseConfig);
-// const storage = getStorage(firebaseApp);
+
 
 
 function setup() {
@@ -124,21 +106,8 @@ function setup() {
   // vector array used to store points, this will max out at 100
   resetVectorStore();
 
-  // uploadBlob('assets/E47DF2.png');
 
 }
-
-// function uploadBlob(file) {
-//   const ref = firebaseApp.ref().child('some-child');
-//
-//   // [START storage_upload_blob]
-//   // 'file' comes from the Blob or File API
-//   ref.put(file).then((snapshot) => {
-//     console.log('Uploaded a blob or file!');
-//   });
-//   // [END storage_upload_blob]
-// }
-
 
 
 
@@ -184,7 +153,7 @@ function sizeWindow() {
   writeTextUI();
   checkFS();
   stage--;
-  nextDrawing();
+  // nextDrawing(); TODO - this was crucial before, but triggers a save to firestore... so get rid of it
 }
 
 function mousePressed() {
@@ -305,6 +274,12 @@ class Dot {
 }
 
 function nextDrawing() {
+
+  // render without the dots
+  background(10);
+  image(drawLayer, 0, 0);
+
+  saveToFirebase();
   throughDotCount = 0;
   dotsCount = 0;
   // click.play();
@@ -377,9 +352,9 @@ function brushIt(_x, _y, pX, pY) {
     brush_pencil(_x, _y, pX, pY, 70, velocity, 60);
   }
   if (brushSelected === 2) {
-    brush_dottedLine(_x, _y, pX, pY, 90, 1);
+    brush_dottedLine(_x, _y, pX, pY, 80, 1);
   } else if (brushSelected === 3) {
-    brush_lineScatter(_x, _y, pX, pY, 50, 6.5, 2, 120, velocity); // _x, _y, pX, pY, qty, spread, pSize, col
+    brush_lineScatter(_x, _y, pX, pY, 50, 6.5, 2, 90, velocity); // _x, _y, pX, pY, qty, spread, pSize, col
   } else if (brushSelected === 4) {
     brush_pencil(_x, _y, pX, pY, 80, velocity, 255);
   } else if (brushSelected === 5) {
@@ -414,6 +389,8 @@ function brush_dottedLine(_x, _y, pX, pY, c, version) {
   lineArray.push(v1)
   lineRender(c, version);
 }
+
+// todo - can I delete the line stuff
 
 function lineRender(c, version) {
   if (version) {

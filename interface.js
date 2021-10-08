@@ -67,11 +67,11 @@ function selectAbrush(i) {
   changeBrush(i + 1)
 }
 
-function restart() {
-  stage = 0;
-  dimensionCalc();
-  nextDrawing();
-}
+// function restart() {
+//   stage = 0;
+//   dimensionCalc();
+//   nextDrawing();
+// }
 
 function checkFS() {
   if (!fullscreen()) {

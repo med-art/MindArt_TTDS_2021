@@ -6,7 +6,7 @@
 	.st0{display:none;}
 	.st1{display:inline;}
 	.st2{display:inline;fill:#FFFFFF;}
-	.st3{fill:#070707;}
+	.st3{fill:#424242;}
 </style>
 <g id="Layer_7" class="st0">
 	<path class="st1" d="M16.7,442.1c12.2-12.5,72.4-72.2,72.4-72.2s20.1,19.3,38.7,17.7c18.6-1.6,50.8-36.2,50.8-36.2l-52.3-52h0.1
@@ -15,14 +15,14 @@
 	<circle class="st2" cx="2.1" cy="421.5" r="11"/>
 </g>
 <g id="Layer_8">
-	<rect x="69.1" y="244.8" class="st3" width="114.5" height="283.2"/>
+	<rect x="66.8" y="247.1" class="st3" width="114.5" height="283.2"/>
 </g>
 <g id="Layer_1_00000049936269175397678130000016449970567288707248_" class="st0">
 	<polygon class="st1" points="183,222.8 68.5,222.8 44.7,135.1 208.9,135.1 	"/>
 </g>
 <g id="Layer_12">
-	<polygon class="st3" points="183,200.2 68.5,200.2 122.1,112.6 134,112.6 	"/>
-	<rect x="68.5" y="200.2" class="st3" width="114.7" height="22.6"/>
+	<polygon class="st3" points="180.7,202.5 66.2,202.5 119.8,114.9 131.7,114.9 	"/>
+	<rect x="66.2" y="202.5" class="st3" width="114.7" height="22.6"/>
 </g>
 <g id="Layer_9" class="st0">
 	<polygon class="st1" points="183,222.8 68.5,222.8 37.4,108.1 208.9,135.1 	"/>
@@ -47,12 +47,12 @@
 </g>
 <g id="Layer_4" class="st0">
 	<polygon class="st1" points="190.6,337.7 87.7,234.8 178.5,174.5 250.2,241.1 	"/>
-	<ellipse transform="matrix(0.1602 -0.9871 0.9871 0.1602 47.7465 385.1193)" class="st1" cx="250.2" cy="164.5" rx="39" ry="39"/>
+	<ellipse transform="matrix(0.7071 -0.7071 0.7071 0.7071 -43.0348 225.0989)" class="st1" cx="250.2" cy="164.5" rx="39" ry="39"/>
 </g>
 <g id="Layer_5" class="st0">
 	<polygon class="st1" points="190.6,337.7 87.7,234.8 178.5,174.5 250.2,241.1 	"/>
 	
-		<rect x="213.5" y="147.4" transform="matrix(0.666 -0.746 0.746 0.666 -36.8252 244.4635)" class="st1" width="82.1" height="31.9"/>
+		<rect x="213.5" y="147.4" transform="matrix(0.666 -0.746 0.746 0.666 -36.8322 244.456)" class="st1" width="82.1" height="31.9"/>
 </g>
 <g id="Layer_6" class="st0">
 	<polygon class="st1" points="190.6,337.7 87.7,234.8 225.3,182.2 239.7,196.5 	"/>
