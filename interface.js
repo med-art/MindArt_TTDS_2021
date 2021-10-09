@@ -1,23 +1,30 @@
-let colArray = ["#000000", "#333333", "#666666", "#999999", "#cccccc", "#ffffff", "#ffffff"];
 let button, selColour;
 let numSwatch = 6;
 let swatch = [];
 
-function writeTextUI() {
+function clearUI(){
 
-  $(".interface").remove();
-  $(".select").remove();
-  $(".box").remove();
+    $(".interface").remove();
+    $(".select").remove();
+    $(".box").remove();
+}
 
-  textSize(vMax * 2);
-  fill(0);
-  noStroke
-  colH1 = color(355, 0, 20);
+function writeNextButton(){
   nextButton = createButton("New")
   nextButton.id("select");
   nextButton.class("box");
   nextButton.position(width - (16 * vMax), height - (7 * vMax));
   nextButton.mousePressed(nextDrawing);
+}
+
+function writeTextUI() {
+clearUI();
+
+  textSize(vMax * 2);
+  fill(0);
+  noStroke
+  colH1 = color(355, 0, 20);
+  writeNextButton();
 
   // TODO - fading buttons
   for (let i = 0; i < numSwatch + 1; i++) {
@@ -26,9 +33,6 @@ function writeTextUI() {
     noTint();
     swatch[i].position((i * 6) * vMax, height - (8 * vMax));
     swatch[i].size(6 * vMax, 15 * vMax);
-    // swatch[i].style("background-color", colArray[i]);
-    // swatch[i].style("border", "1px solid black");
-    // swatch[i].style("border", "1px solid black");
     swatch[i].class("box");
     swatch[i].mousePressed(function() {
       selectAbrush(i);
@@ -36,18 +40,6 @@ function writeTextUI() {
   }
 
 
-
-  // // write another little box - this could be better
-  // swatch[7] = createButton("");
-  // swatch[7].position((i * 6) * vMax, height - (4 * vMax));
-  // swatch[7].size(9 * vMax, 15 * vMax);
-  // swatch[7].style("background-color", colArray[1]);
-  // // eraser.style("border", "1px solid black");
-  // swatch[7].class("box");
-  // swatch[7].style("border-radius", 0);
-  // swatch[7].mousePressed(function() {
-  //   selectAbrush(6);
-  // });
 }
 
 function selectAbrush(i) {
@@ -66,12 +58,6 @@ function selectAbrush(i) {
   // change the brush
   changeBrush(i + 1)
 }
-
-// function restart() {
-//   stage = 0;
-//   dimensionCalc();
-//   nextDrawing();
-// }
 
 function checkFS() {
   if (!fullscreen()) {
@@ -102,3 +88,14 @@ function changeBrush(brushSel) {
   brushSelected = brushSel - 1;
 
 }
+
+//startSimulation and pauseSimulation defined elsewhere
+function handleVisibilityChange() {
+  // if (document.hidden) {
+  //   audio.stop();
+  // } else {
+  //   audio.loop(1);
+  // }
+}
+
+document.addEventListener("visibilitychange", handleVisibilityChange, false);
