@@ -60,24 +60,24 @@ function selectAbrush(i) {
 }
 
 function checkFS() {
-  if (!fullscreen()) {
-    addFS();
-  }
+  // if (!fullscreen()) {
+  //   addFS();
+  // }
 }
 
 function addFS() {
-  $('.fsButton').remove();
-  fsButton = createImg('assets/enterFS.png', "FULLSCREEN");
-  fsButton.style('height', '4.5vMax');
-  // fsButton.class("fsButton");
-  fsButton.class("box");
-  fsButton.position(width - (7.5 * vMax), 1.5 * vMax);
-  fsButton.mousePressed(fs);
+  // $('.fsButton').remove();
+  // fsButton = createImg('assets/enterFS.png', "FULLSCREEN");
+  // fsButton.style('height', '4.5vMax');
+  // // fsButton.class("fsButton");
+  // fsButton.class("box");
+  // fsButton.position(width - (7.5 * vMax), 1.5 * vMax);
+  // fsButton.mousePressed(fs);
 }
 
 function fs() {
-  fullscreen(1);
-  $('.fsButton').remove();
+  // fullscreen(1);
+  // $('.fsButton').remove();
 }
 
 
