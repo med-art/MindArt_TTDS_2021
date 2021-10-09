@@ -22,17 +22,17 @@ function saveToFirebase() {
   var file = defaultCanvas0.toBlob(function(blob) {
     var image = new Image();
     image.src = blob;
-    storageRef.child(type+"/" + name).put(blob);
+    storageRef.child(type + "/" + name).put(blob);
   }, 'image/png', 0.95);
 };
 
 function getFirebaseImgList() {
 
   // locay array to Store all images
-let fbPathArray = [];
+  let fbPathArray = [];
 
   // get all paths as a list
-  storageRef.child(type+"/").listAll()
+  storageRef.child(type + "/").listAll()
     .then((res) => {
       res.items.forEach((itemRef) => {
         //push these to an array
@@ -42,7 +42,7 @@ let fbPathArray = [];
       reducedArr = [];
 
       let qty = 10;
-      if (fbPathArray.length < 10){
+      if (fbPathArray.length < 10) {
         qty = fbPathArray.length;
       }
       console.log(qty);
@@ -62,10 +62,9 @@ function getFirebaseImgListOLD() {
 
 
   // get all paths as a list
-  storageRef.child(type+"/").listAll()
+  storageRef.child(type + "/").listAll()
     .then((res) => {
-      res.prefixes.forEach((folderRef) => {
-      });
+      res.prefixes.forEach((folderRef) => {});
       res.items.forEach((itemRef) => {
         //push these to an array
         fbPathArray.push(itemRef.location.path);
@@ -74,20 +73,26 @@ function getFirebaseImgListOLD() {
       reducedArr = [];
 
       let qty = 10;
-      if (fbPathArray.length < 10){
+      if (fbPathArray.length < 10) {
         qty = fbPathArray.length;
       }
       for (let i = 0; i < qty; i++) {
         reducedArr.push(fbPathArray[Math.floor(random(0, fbPathArray.length))]);
-        downloadImg(i); // todo - move above
+        downloadImg(i, qty);
       }
 
     }).catch((error) => {
+      console.log("download error")
       // Uh-oh, an error occurred!
     });
 }
 
-function downloadImg(i) {
+
+
+function downloadImg(i, qty) {
+  if (i == qty-1){
+    writeNextButton();
+  }
 
   console.log("downloading");
   // Create a reference to the file we want to download

@@ -202,9 +202,9 @@ function nextDrawing() {
   if (drawingPaused == 0) {
     upload();
     clearUI();
-    writeNextButton();
     renderSmall();
-    document.getElementById("select").innerHTML = "New Drawing";
+    setTimeout(writeNextButton, 2500);
+
   } else if (drawingPaused == 1) {
 
     throughDotCount = 0;

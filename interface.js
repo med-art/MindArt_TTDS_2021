@@ -10,7 +10,12 @@ function clearUI(){
 }
 
 function writeNextButton(){
-  nextButton = createButton("Save")
+
+  if (drawingPaused){
+  nextButton = createButton("New Drawing")
+} else {
+    nextButton = createButton("Save")
+}
   nextButton.id("select");
   nextButton.class("box");
   nextButton.position(width - (16 * vMax), height - (7 * vMax));
