@@ -10,7 +10,7 @@ function clearUI(){
 }
 
 function writeNextButton(){
-  nextButton = createButton("New")
+  nextButton = createButton("Save")
   nextButton.id("select");
   nextButton.class("box");
   nextButton.position(width - (16 * vMax), height - (7 * vMax));
