@@ -43,7 +43,7 @@ storageRef.listAll()
       fbPathArray.push(itemRef.location.path);
       });
     }).then(() => {
-      for (let i = 0; i < 5; i++){
+      for (let i = 0; i < 10; i++){
     reducedArr.push(fbPathArray[Math.floor(random(0,fbPathArray.length))]);
     downloadImg(i); // todo - move above
       }
