@@ -19,7 +19,7 @@ var database;
 
 function start() {
   $(".startBtn").remove();
-  fullscreen(1);
+  //fullscreen(1);
   sizeWindow();
   writeTextUI();
   selectAbrush(1);
