@@ -1,6 +1,7 @@
 // drawingPauseds are used to track each set of dots
 let drawingPaused = 1;
 let username;
+let appStarted = 0;
 
 let type = 'linear';
 let typeBool = 1; // 0 is linear, 1 is polar
@@ -31,6 +32,7 @@ console.log(username);
   $(".username").remove();
 
   //fullscreen(1);
+  appStarted = 1;
   sizeWindow();
   writeTextUI();
   selectAbrush(1);
@@ -85,8 +87,11 @@ function dimensionCalc() {
   }
 }
 
+
 function windowResized() {
-  sizeWindow();
+ if (appStarted){
+     sizeWindow();
+ }
 }
 
 function sizeWindow() {
