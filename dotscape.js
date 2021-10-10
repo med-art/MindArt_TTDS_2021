@@ -38,7 +38,7 @@ console.log(username);
   selectAbrush(1);
   render();
 
-  appStarted = 1; 
+  appStarted = 1;
 }
 
 function setup() {
@@ -103,9 +103,11 @@ function sizeWindow() {
   dimensionCalc();
   removeElements();
   writeTextUI();
-  checkFS();
+  // checkFS();
   drawingPaused--;
-  linearGrid();
+
+  render();
+    linearGrid();
 }
 
 function mousePressed() {
