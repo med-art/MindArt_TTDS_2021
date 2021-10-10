@@ -58,10 +58,10 @@ function brushIt(_x, _y, pX, pY) {
 }
 
 function brush_pencil(_x, _y, pX, pY, t, v, c) {
-  v = constrain(v, 2, 40);
+  v = constrain(v, 6, 40);
   let v0 = createVector(_x, _y);
   let v1 = createVector(pX, pY);
-  drawLayer.stroke(c, 145);
+  drawLayer.stroke(c, 200);
   drawLayer.strokeWeight(1);
   for (let i = 0; i < int(velocity*10); i++) {
     let v3 = p5.Vector.lerp(v0, v1, random(0, 1));

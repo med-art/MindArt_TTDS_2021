@@ -26,6 +26,7 @@ body{
 .loadingclass {
   margin: 0;
 position: absolute;
+width: 100px;
 top: 50%;
 left: 55%;
 -ms-transform: translate(-50%, -50%);
@@ -101,37 +102,27 @@ transform: translate(-50%, -50%);
   -moz-appearance: none;
   appearance: none;
   opacity: 1;
-  font-size: 2vmax;
-  font-family: "AvenirNext";
-  letter-spacing: 1px;
-  font-weight: 900;
-  text-align: center;
-  background-color: white;
-  color: #7e888f;
-  border-color: white;
-  border-width: 3px;
 
-  border-style: solid;
-  border-radius: 3vmax;
-  padding: 1vmax;
+
 
   position: absolute;
   top: 50%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  box-shadow: 0px 0px 3px white;
+
 }
 
 input, label{
-  font-size: 3vmax;
+  font-size: 1.8vmax;
   font-family: "AvenirNext";
   letter-spacing: 1px;
   font-weight: 900;
   color: #7e888f;
   border-style: solid;
-  border-radius: 3vmax;
+  border-radius: 1vmax;
   padding: 1vmax;
+  margin: 0.5vmax;
 }
 
 
@@ -141,18 +132,12 @@ input, label{
   -moz-appearance: none;
   appearance: none;
   opacity: 1;
-  font-size: 4vmax;
   font-family: "AvenirNext";
   letter-spacing: 1px;
   font-weight: 900;
   text-align: center;
-  background-color: white;
   color: black;
-;
-  /* border-radius: 3vmax; */
-
-  width: 80%;
-
+margin-top: 40px;
 
 }
 

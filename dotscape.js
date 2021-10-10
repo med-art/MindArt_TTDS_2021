@@ -23,12 +23,13 @@ let brushSelected = 1;
 var database;
 
 function start() {
-  $(".startBtn").remove();
+
   username = document.getElementById("lname").value;
   if (username.length == 0){
-    username = "default";
+    username = "anonymous";
   }
 console.log(username);
+  $(".loading").remove();
   $(".username").remove();
 
   //fullscreen(1);
@@ -57,18 +58,6 @@ function setup() {
   appCol = color(205, 12, 64, 0.1);
   drawLayer.colorMode(RGB, 255, 255, 255, 255);
 
-  // var stbtn = $("<div />").appendTo("body");
-  // stbtn.addClass('startBtn');
-  // $('<p>Touch here to begin</p>').appendTo(stbtn);
-  // stbtn.mousedown(start);
-  // stbtn.mousemove(start);
-
-  var username = $("<div />").appendTo("body");
-  username.addClass('username');
-  $('<input type="text" id="lname" name="lname" placeholder="Username (optional)">').appendTo(username);
-  var button = $('<input type="submit" value="Go">').appendTo(username);
-  button.mousedown(start);
-  //button.mousemove(start); //todo - do I need this???
 
   //basicLayer info
   drawLayer.stroke(10);
