@@ -32,11 +32,13 @@ console.log(username);
   $(".username").remove();
 
   //fullscreen(1);
-  appStarted = 1;
+
   sizeWindow();
   writeTextUI();
   selectAbrush(1);
   render();
+
+  appStarted = 1; 
 }
 
 function setup() {
