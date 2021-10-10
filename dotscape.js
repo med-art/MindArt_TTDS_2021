@@ -46,6 +46,10 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   lineLayer = createGraphics(width, height);
   drawLayer = createGraphics(width, height);
+  dotLayer = createGraphics(width, height);
+  dotLayer.fill(255, 140);
+  dotLayer.noStroke();
+
 
   // initialise all colour informaiton
   pixelDensity(1); // Ignores retina displays
@@ -168,11 +172,12 @@ function draw() {
 
 function render() {
   background(10);
-  for (let i = 0; i < dotsCount; i++) {
-    dots[i].show();
-  }
-  image(drawLayer, 0, 0);
-  image(lineLayer, 0, 0);
+  noTint();
+  blendMode(BLEND);
+  image(dotLayer, 0, 0, width, height);
+  image(drawLayer, 0, 0, width, height);
+  image(lineLayer, 0, 0, width, height);
+
 
 }
 
@@ -252,6 +257,7 @@ function nextDrawing() {
 }
 
 function linearGrid() {
+  dotLayer.clear();
   type = "linear";
   dots = [];
   // calculate amount of x's and y's to include
@@ -262,12 +268,13 @@ function linearGrid() {
   let spaceY = height / qtyY;
   for (let i = 1; i < qtyX; i++) {
     for (let j = 0; j < qtyY; j++) {
-      dots[dotsCount++] = new Dot((spaceX * i), (spaceY * (j + 0.5)), r);
+      dotLayer.ellipse((spaceX * i), (spaceY * (j + 0.5)), r*2, r*2);
     }
   }
 }
 
 function polarGrid() {
+  dotLayer.clear();
   type = "polar";
   let r;
   let gap;
@@ -286,6 +293,6 @@ function polarGrid() {
     let tempX = (tran * cos(radians(rotateVal))) + width / 2;
     let tempY = (tran * sin(radians(rotateVal))) + height / 2;
     r = r + ((i / 100000) * vMax);
-    dots[dotsCount++] = new Dot(tempX, tempY, r);
+    dotLayer.ellipse(tempX, tempY, r*2, r*2);
   }
 }
