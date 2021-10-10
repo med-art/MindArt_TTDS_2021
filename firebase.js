@@ -17,7 +17,9 @@ const app = firebase.initializeApp(firebaseConfig);
 const storageRef = app.storage().ref();
 
 function saveToFirebase() {
-  const name = +new Date() + ".png";
+  const d = +new Date();
+
+  const name = username + "." + d +".png";
   // note jpeg not working... TODO
   var file = defaultCanvas0.toBlob(function(blob) {
     var image = new Image();
@@ -90,9 +92,7 @@ function getFirebaseImgListOLD() {
 
 
 function downloadImg(i, qty) {
-  if (i == qty-1){
-    writeNextButton();
-  }
+
 
   console.log("downloading");
   // Create a reference to the file we want to download

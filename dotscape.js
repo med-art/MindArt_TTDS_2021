@@ -1,5 +1,6 @@
 // drawingPauseds are used to track each set of dots
 let drawingPaused = 1;
+let username;
 
 let type = 'linear';
 let typeBool = 1; // 0 is linear, 1 is polar
@@ -22,6 +23,13 @@ var database;
 
 function start() {
   $(".startBtn").remove();
+  username = document.getElementById("lname").value;
+  if (username.length == 0){
+    username = "default";
+  }
+console.log(username);
+  $(".username").remove();
+
   //fullscreen(1);
   sizeWindow();
   writeTextUI();
@@ -41,11 +49,18 @@ function setup() {
   appCol = color(205, 12, 64, 0.1);
   drawLayer.colorMode(RGB, 255, 255, 255, 255);
 
-  var stbtn = $("<div />").appendTo("body");
-  stbtn.addClass('startBtn');
-  $('<p>Touch here to begin</p>').appendTo(stbtn);
-  stbtn.mousedown(start);
-  stbtn.mousemove(start);
+  // var stbtn = $("<div />").appendTo("body");
+  // stbtn.addClass('startBtn');
+  // $('<p>Touch here to begin</p>').appendTo(stbtn);
+  // stbtn.mousedown(start);
+  // stbtn.mousemove(start);
+
+  var username = $("<div />").appendTo("body");
+  username.addClass('username');
+  $('<input type="text" id="lname" name="lname" placeholder="Username (optional)">').appendTo(username);
+  var button = $('<input type="submit" value="Go">').appendTo(username);
+  button.mousedown(start);
+  //button.mousemove(start); //todo - do I need this???
 
   //basicLayer info
   drawLayer.stroke(10);
@@ -245,12 +260,12 @@ function linearGrid() {
 
 function polarGrid() {
   type = "polar";
-  let r = 20;
+  let r;
   let gap;
   let remainder;
   if (drawingPaused === 1) {
-    dotQty = 300;
-    r = vMax * 0.25;
+    dotQty = 240;
+    r = 5;
     gap = circleRad * 0.95;
     remainder = circleRad - gap;
   }
