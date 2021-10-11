@@ -14,9 +14,9 @@ function writeNextButton(i){
   clearUI();
 
   if (i){
-  nextButton = createButton("New Drawing")
-} else {
   nextButton = createButton("Save")
+} else {
+  nextButton = createButton("New Drawing")
 }
   nextButton.id("select");
   nextButton.class("box");
