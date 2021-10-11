@@ -40,12 +40,12 @@ function resetVectorStore() {
 
 function brushIt(_x, _y, pX, pY) {
   if (brushSelected === 1) {
-    brush_pencil(_x, _y, pX, pY, 70, velocity, 60);
+    brush_pencil(_x, _y, pX, pY, 70, velocity, 0);
   }
   if (brushSelected === 2) {
-    brush_dottedLine(_x, _y, pX, pY, 80, 1);
+    brush_dottedLine(_x, _y, pX, pY, 16, 1);
   } else if (brushSelected === 3) {
-    brush_lineScatter(_x, _y, pX, pY, 40, 6.5, 1, 90, velocity); // _x, _y, pX, pY, qty, spread, pSize, col
+    brush_lineScatter(_x, _y, pX, pY, 40, 6.5, 1, 20, velocity); // _x, _y, pX, pY, qty, spread, pSize, col
   } else if (brushSelected === 4) {
     brush_pencil(_x, _y, pX, pY, 80, velocity, 255);
   } else if (brushSelected === 5) {
@@ -58,7 +58,7 @@ function brushIt(_x, _y, pX, pY) {
 }
 
 function brush_pencil(_x, _y, pX, pY, t, v, c) {
-  v = constrain(v, 6, 40);
+  v = constrain(v, 1, 30);
   let v0 = createVector(_x, _y);
   let v1 = createVector(pX, pY);
   drawLayer.stroke(c, 200);
@@ -117,7 +117,7 @@ function brush_scatter1(_x, _y, qty, spread, pSize, colRand, v, pX, pY) {
 function brush_lineScatter(_x, _y, pX, pY, qty, spread, pSize, colRand, velocity) {
   spread = constrain(spread*(velocity/20), spread*0.8, spread*1.2);
   drawLayer.strokeWeight(pSize); // for line work
-  drawLayer.stroke(colRand, colRand);
+  drawLayer.stroke(colRand, 50);
   for (i = 0; i < qty; i++) {
     let rX = randomGaussian(-spread, spread);
     let rY = randomGaussian(-spread, spread);

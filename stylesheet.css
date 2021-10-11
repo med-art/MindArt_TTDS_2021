@@ -6,7 +6,7 @@ html {
 -ms-user-select:none;
 user-select:none;
 -webkit-tap-highlight-color:rgba(0,0,0,0);
-background-color: #4e4e4e;
+background-color: #222222;
 overflow: hidden;
 }
 
@@ -81,14 +81,11 @@ transform: translate(-50%, -50%);
   font-weight: 900;
   text-align: center;
   background-color: white;
-  color: #7e888f;
   border-color: white;
   border-width: 3px;
-
   border-style: solid;
   border-radius: 3vmax;
   padding: 1vmax;
-
   position: absolute;
   top: 50%;
   left: 50%;
@@ -111,6 +108,11 @@ transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 
+}
+
+.loadImage{
+  width: 30vmax;
+  height: 30vmax;
 }
 
 input, label{

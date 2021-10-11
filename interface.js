@@ -9,12 +9,14 @@ function clearUI(){
     $(".box").remove();
 }
 
-function writeNextButton(){
+function writeNextButton(i){
 
-  if (drawingPaused){
+  clearUI();
+
+  if (i){
   nextButton = createButton("New Drawing")
 } else {
-    nextButton = createButton("Save")
+  nextButton = createButton("Save")
 }
   nextButton.id("select");
   nextButton.class("box");
@@ -29,7 +31,7 @@ clearUI();
   fill(0);
   noStroke
   colH1 = color(355, 0, 20);
-  writeNextButton();
+  writeNextButton(1);
 
   // TODO - fading buttons
   for (let i = 0; i < numSwatch + 1; i++) {

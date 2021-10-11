@@ -1,7 +1,10 @@
 // drawingPauseds are used to track each set of dots
-let drawingPaused = 1;
+let drawingPaused = 0;
 let username;
 let appStarted = 0;
+
+//track touches
+let tracker = 0;
 
 let type = 'linear';
 let typeBool = 1; // 0 is linear, 1 is polar
@@ -22,13 +25,16 @@ let brushSelected = 1;
 //FIREBASE STUFF
 var database;
 
+
+let drawLayer, dotLayer, lineLayer;
+
 function start() {
 
   username = document.getElementById("lname").value;
-  if (username.length == 0){
+  if (username.length == 0) {
     username = "anonymous";
   }
-console.log(username);
+
   $(".loading").remove();
   $(".username").remove();
 
@@ -37,9 +43,12 @@ console.log(username);
   sizeWindow();
   writeTextUI();
   selectAbrush(1);
+  linearGrid();
   render();
 
   appStarted = 1;
+
+
 }
 
 function setup() {
@@ -48,7 +57,7 @@ function setup() {
   lineLayer = createGraphics(width, height);
   drawLayer = createGraphics(width, height);
   dotLayer = createGraphics(width, height);
-  dotLayer.fill(255, 140);
+  dotLayer.fill(10);
   dotLayer.noStroke();
 
 
@@ -65,6 +74,7 @@ function setup() {
 
   // vector array used to store points, this will max out at 100
   resetVectorStore();
+
 }
 
 
@@ -84,23 +94,33 @@ function dimensionCalc() {
 
 
 function windowResized() {
- if (appStarted){
-     sizeWindow();
- }
+  if (appStarted) {
+    sizeWindow();
+  }
 }
 
 function sizeWindow() {
   resizeCanvas(windowWidth, windowHeight);
   lineLayer.resizeCanvas(windowWidth, windowHeight);
+  let aa = createGraphics(windowWidth, windowHeight);
+  aa.image(drawLayer, 0, 0, windowWidth, windowHeight)
   drawLayer.resizeCanvas(windowWidth, windowHeight);
-  dimensionCalc();
-  removeElements();
-  writeTextUI();
-  // checkFS();
-  drawingPaused--;
+  drawLayer = aa;
 
-  render();
-    linearGrid();
+  let bb = createGraphics(windowWidth, windowHeight);
+  bb.image(dotLayer, 0, 0, windowWidth, windowHeight);
+  dotLayer.resizeCanvas(windowWidth, windowHeight);
+  dotLayer = bb;
+
+  dimensionCalc();
+  writeTextUI();
+
+ if (drawingPaused){
+   renderSmall();
+ } else {
+   render();
+ }
+
 }
 
 function mousePressed() {
@@ -125,6 +145,7 @@ function mouseDragged() {
     calcDynamics();
 
     brushIt(mouseX, mouseY, pmouseX, pmouseY);
+    tracker++;
     //  drawLayer.line(mouseX, mouseY, pmouseX, pmouseY);
     render();
   }
@@ -160,7 +181,7 @@ function draw() {
 
 
 function render() {
-  background(10);
+  background(40);
   noTint();
   blendMode(BLEND);
   image(dotLayer, 0, 0, width, height);
@@ -194,12 +215,17 @@ function upload() {
   //renderWithout the dots or the background;
   clear();
   image(drawLayer, 0, 0);
+  if (tracker > 200){
   saveToFirebase();
+  console.log("Threshold reached - image saved")
+} else {
+  console.log("Threshold not reached - image ignored")
+}
 }
 
 function renderSmall() {
   blendMode(BLEND);
-  background(10);
+  background(40);
   tint(255, 80)
   image(drawLayer, width / 4, height / 4, width / 2, height / 2);
   blendMode(ADD);
@@ -207,9 +233,7 @@ function renderSmall() {
   setTimeout(getFirebaseImgList, 1000);
 
 
-  //access firebase
-  // pull down 5 images
-  //layer them one of top of another
+
 
 }
 
@@ -221,7 +245,7 @@ function nextDrawing() {
     upload();
     clearUI();
     renderSmall();
-    setTimeout(writeNextButton, 2500);
+    setTimeout(writeNextButton(0), 2500);
 
   } else if (drawingPaused == 1) {
 
@@ -247,6 +271,8 @@ function nextDrawing() {
 
 function linearGrid() {
   dotLayer.clear();
+  dotLayer.fill(20);
+  dotLayer.noStroke();
   type = "linear";
   dots = [];
   // calculate amount of x's and y's to include
@@ -257,13 +283,15 @@ function linearGrid() {
   let spaceY = height / qtyY;
   for (let i = 1; i < qtyX; i++) {
     for (let j = 0; j < qtyY; j++) {
-      dotLayer.ellipse((spaceX * i), (spaceY * (j + 0.5)), r*2, r*2);
+      dotLayer.ellipse((spaceX * i), (spaceY * (j + 0.5)), r * 2, r * 2);
     }
   }
 }
 
 function polarGrid() {
   dotLayer.clear();
+  dotLayer.fill(20);
+  dotLayer.noStroke();
   type = "polar";
   let r;
   let gap;
@@ -282,6 +310,6 @@ function polarGrid() {
     let tempX = (tran * cos(radians(rotateVal))) + width / 2;
     let tempY = (tran * sin(radians(rotateVal))) + height / 2;
     r = r + ((i / 100000) * vMax);
-    dotLayer.ellipse(tempX, tempY, r*2, r*2);
+    dotLayer.ellipse(tempX, tempY, r * 2, r * 2);
   }
 }

@@ -43,15 +43,17 @@ function getFirebaseImgList() {
     }).then(() => {
       reducedArr = [];
 
-      let qty = 10;
+      let qty = 30;
       if (fbPathArray.length < 10) {
         qty = fbPathArray.length;
       }
-      console.log(qty);
+
       for (let i = 0; i < qty; i++) {
+        if (drawingPaused){
         reducedArr.push(fbPathArray[Math.floor(random(0, fbPathArray.length))]);
         downloadImg(i); // todo - move above
       }
+    }
 
     }).catch((error) => {
       // Uh-oh, an error occurred!
@@ -74,8 +76,8 @@ function getFirebaseImgListOLD() {
     }).then(() => {
       reducedArr = [];
 
-      let qty = 10;
-      if (fbPathArray.length < 10) {
+      let qty = 15;
+      if (fbPathArray.length < qty) {
         qty = fbPathArray.length;
       }
       for (let i = 0; i < qty; i++) {
@@ -102,10 +104,12 @@ function downloadImg(i, qty) {
   starsRef.getDownloadURL()
     .then((url) => {
       dlImg = loadImage(url, function(loadedImg) {
-        let tempX = random(0, width);
-        let tempY = random(0, height);
-        image(loadedImg, width / 4, height / 4, width / 2, height / 2);
-        console.log("here");
+
+        // let yDice = Math.floor(random(0,3));
+        // let xDice = Math.floor(random(0,3));
+        // image(loadedImg, (xDice*width/2)-width/4, (yDice*height/2)-height/4, width / 2, height / 2);
+        image(loadedImg, width/4, height/4, width / 2, height / 2);
+
 
       });
     })
