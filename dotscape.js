@@ -228,7 +228,7 @@ function renderSmall() {
   background(50);
   tint(255, 80)
   image(drawLayer, width / 4, height / 4, width / 2, height / 2);
-  blendMode(ADD);
+  blendMode(OVERLAY);
 
   setTimeout(getFirebaseImgList, 1000);
 
