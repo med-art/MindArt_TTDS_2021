@@ -226,7 +226,7 @@ function upload() {
 function renderSmall() {
   blendMode(BLEND);
   background(65);
-  tint(255, 140)
+  tint(255, 200)
   image(drawLayer, width / 4, height / 4, width / 2, height / 2);
   blendMode(OVERLAY);
 
