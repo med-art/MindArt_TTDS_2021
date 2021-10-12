@@ -43,7 +43,7 @@ function getFirebaseImgList() {
     }).then(() => {
       reducedArr = [];
 
-      let qty = 30;
+      let qty = 150;
       if (fbPathArray.length < 10) {
         qty = fbPathArray.length;
       }
@@ -76,10 +76,10 @@ function getFirebaseImgListOLD() {
     }).then(() => {
       reducedArr = [];
 
-      let qty = 50;
-      if (fbPathArray.length < qty) {
-        qty = fbPathArray.length;
-      }
+      let qty = 160;
+      // if (fbPathArray.length < qty) {
+      //   qty = fbPathArray.length;
+      // }
       for (let i = 0; i < qty; i++) {
         reducedArr.push(fbPathArray[Math.floor(random(0, fbPathArray.length))]);
         downloadImg(i, qty);
@@ -105,9 +105,9 @@ function downloadImg(i, qty) {
     .then((url) => {
       dlImg = loadImage(url, function(loadedImg) {
 
-        let yDice = Math.floor(random(0,3));
-        let xDice = Math.floor(random(0,3));
-        image(loadedImg, (xDice*width/2)-width/4, (yDice*height/2)-height/4, width / 2, height / 2);
+        let yDice = Math.floor(random(0,5));
+        let xDice = Math.floor(random(0,5));
+        image(loadedImg, (xDice*width/4)-width/8, (yDice*height/4)-height/8, width / 4, height / 4);
         // image(loadedImg, width/4, height/4, width / 2, height / 2);
 
 

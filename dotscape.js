@@ -181,7 +181,7 @@ function draw() {
 
 
 function render() {
-  background(50);
+  background(65);
   noTint();
   blendMode(BLEND);
   image(dotLayer, 0, 0, width, height);
@@ -225,7 +225,7 @@ function upload() {
 
 function renderSmall() {
   blendMode(BLEND);
-  background(50);
+  background(65);
   tint(255, 80)
   image(drawLayer, width / 4, height / 4, width / 2, height / 2);
   blendMode(OVERLAY);
