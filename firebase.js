@@ -107,8 +107,8 @@ function downloadImg(i, qty) {
 
         let yDice = Math.floor(random(0,10));
         let xDice = Math.floor(random(0,10));
-        image(loadedImg, (xDice*width/8)-width/16, (yDice*height/8)-height/16, width / 8, height / 8);
-            // image(loadedImg, random(0, width), random(0, height), width / 8, height / 8);
+        // image(loadedImg, (xDice*width/8)-width/16, (yDice*height/8)-height/16, width / 8, height / 8);
+            image(loadedImg, random(0, width), random(0, height), width / 8, height / 8);
         // image(loadedImg, 0, 0, width, height);
 
 
