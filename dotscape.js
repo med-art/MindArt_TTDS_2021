@@ -118,8 +118,7 @@ function sizeWindow() {
   console.log("B");
 aa = createGraphics(width, height);
     console.log("B2");
-    console.log(windowWidth);
-    console.log(windowHeight);
+    console.log(aa);
   aa.image(drawLayer, 0, 0, width, height)
   console.log("C");
   drawLayer.resizeCanvas(windowWidth, windowHeight);
