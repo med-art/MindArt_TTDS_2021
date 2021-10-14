@@ -45,7 +45,6 @@ function start() {
   selectAbrush(1);
   linearGrid();
   render();
-alert("hello");
 
   appStarted = 1;
 
