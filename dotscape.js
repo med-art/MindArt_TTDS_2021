@@ -114,11 +114,11 @@ function windowResized() {
 function sizeWindow() {
   console.log("A");
   resizeCanvas(windowWidth, windowHeight);
-  lineLayer.resizeCanvas(windowWidth, windowHeight);
+  lineLayer.resizeCanvas(width, height);
   console.log("B");
-aa = createGraphics(windowWidth, windowHeight);
+aa = createGraphics(width, height);
     console.log("B2");
-  aa.image(drawLayer, 0, 0, windowWidth, windowHeight)
+  aa.image(drawLayer, 0, 0, width, height)
   console.log("C");
   drawLayer.resizeCanvas(windowWidth, windowHeight);
   drawLayer = aa;
@@ -126,7 +126,7 @@ aa = createGraphics(windowWidth, windowHeight);
 
   console.log("E");
   bb = createGraphics(windowWidth, windowHeight);
-  bb.image(dotLayer, 0, 0, windowWidth, windowHeight);
+  bb.image(dotLayer, 0, 0, width, height);
     console.log("F");
   dotLayer.resizeCanvas(windowWidth, windowHeight);
   dotLayer = bb;
