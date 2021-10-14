@@ -21,11 +21,12 @@ function saveToFirebase() {
 
   const name = username + "." + d +".png";
   // note jpeg not working... TODO
-  var file = defaultCanvas0.toBlob(function(blob) {
+  var uploadCanvas = document.getElementById('uploadLayer');
+  var file = uploadCan.toBlob(function(blob) {
     var image = new Image();
     image.src = blob;
     storageRef.child(type + "/" + name).put(blob);
-  }, 'image/png', 0.95);
+  }, 'image/png', 0.5);
 };
 
 function getFirebaseImgList() {
@@ -71,6 +72,7 @@ function getFirebaseImgList() {
 function getFirebaseImgListV2() {
   blendMode(BLEND);
   background(60);
+  image(drawLayer,width*0.4,height*0.4,width*0.2,height*0.2);
   blendMode(OVERLAY);
   tint(255, 255)
   for (let i = 0; i < reducedArr.length; i++) {
@@ -79,7 +81,6 @@ function getFirebaseImgListV2() {
   }
 }
 }
-
 
 
 function downloadImg(i, qty) {

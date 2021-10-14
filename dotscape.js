@@ -26,7 +26,7 @@ let brushSelected = 1;
 var database;
 
 
-let drawLayer, dotLayer, lineLayer;
+let drawLayer, dotLayer, lineLayer, uploadLayer;
 
 function start() {
 
@@ -55,8 +55,14 @@ function setup() {
   // create canvas and all layers
   createCanvas(windowWidth, windowHeight);
   lineLayer = createGraphics(width, height);
+  lineLayer.id("lineLayer");
   drawLayer = createGraphics(width, height);
+  drawLayer.id("drawLayer");
   dotLayer = createGraphics(width, height);
+  dotLayer.id("dotLayer");
+  uploadLayer = createGraphics(500, 500);
+  uploadLayer.id("uploadLayer");
+
   dotLayer.fill(10);
   dotLayer.noStroke();
 
@@ -106,11 +112,13 @@ function sizeWindow() {
   aa.image(drawLayer, 0, 0, windowWidth, windowHeight)
   drawLayer.resizeCanvas(windowWidth, windowHeight);
   drawLayer = aa;
+  aa.remove();
 
   let bb = createGraphics(windowWidth, windowHeight);
   bb.image(dotLayer, 0, 0, windowWidth, windowHeight);
   dotLayer.resizeCanvas(windowWidth, windowHeight);
   dotLayer = bb;
+  bb.remove();
 
   dimensionCalc();
   writeTextUI();
@@ -212,9 +220,9 @@ class Dot {
 }
 
 function upload() {
-  //renderWithout the dots or the background;
+  // //renderWithout the dots or the background;
   clear();
-  image(drawLayer, 0, 0);
+  uploadLayer.image(drawLayer, 0, 0, 500, 500);
   if (tracker > 200){
   saveToFirebase();
   console.log("Threshold reached - image saved")
