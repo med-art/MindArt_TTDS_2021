@@ -26,7 +26,7 @@ let brushSelected = 1;
 var database;
 
 
-let drawLayer, dotLayer, lineLayer, uploadLayer;
+let drawLayer, dotLayer, lineLayer, uploadLayer, aa, bb;
 
 function start() {
 
@@ -116,22 +116,22 @@ function sizeWindow() {
   resizeCanvas(windowWidth, windowHeight);
   lineLayer.resizeCanvas(windowWidth, windowHeight);
   console.log("B");
-  let aa = createGraphics(windowWidth, windowHeight);
+aa = createGraphics(windowWidth, windowHeight);
     console.log("B2");
   aa.image(drawLayer, 0, 0, windowWidth, windowHeight)
   console.log("C");
   drawLayer.resizeCanvas(windowWidth, windowHeight);
   drawLayer = aa;
     console.log("D");
-  aa.remove();
+
   console.log("E");
-  let bb = createGraphics(windowWidth, windowHeight);
+  bb = createGraphics(windowWidth, windowHeight);
   bb.image(dotLayer, 0, 0, windowWidth, windowHeight);
     console.log("F");
   dotLayer.resizeCanvas(windowWidth, windowHeight);
   dotLayer = bb;
     console.log("G");
-  bb.remove();
+
   console.log("H");
   dimensionCalc();
   writeTextUI();
