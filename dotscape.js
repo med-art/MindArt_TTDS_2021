@@ -34,17 +34,22 @@ function start() {
   if (username.length == 0) {
     username = "anonymous";
   }
-
+  console.log("A");
   $(".loading").remove();
+    console.log("B");
   $(".username").remove();
 
   //fullscreen(1);
 
-
+  console.log("C");
   sizeWindow();
+    console.log("D");
   writeTextUI();
+    console.log("E");
   selectAbrush(1);
+    console.log("F");
   linearGrid();
+    console.log("G");
   render();
 
   appStarted = 1;
