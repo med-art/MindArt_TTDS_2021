@@ -222,7 +222,10 @@ class Dot {
 function upload() {
   // //renderWithout the dots or the background;
   clear();
+  uploadLayer.background(127)
   uploadLayer.image(drawLayer, 0, 0, 500, 500);
+  background(127);
+  image(drawLayer,0,0,width,height);
   if (tracker > 200){
   saveToFirebase();
   console.log("Threshold reached - image saved")
@@ -237,11 +240,7 @@ function renderSmall() {
   tint(255, 200)
   image(drawLayer, width / 4, height / 4, width / 2, height / 2);
   blendMode(OVERLAY);
-
   setTimeout(getFirebaseImgList, 1000);
-
-
-
 
 }
 
@@ -253,7 +252,7 @@ function nextDrawing() {
     upload();
     clearUI();
     renderSmall();
-    setTimeout(writeNextButton(0), 2500);
+    setTimeout(writeNextButton, 1200);
 
   } else if (drawingPaused == 1) {
 

@@ -2,7 +2,7 @@
 
 let dlImg;
 
-let reducedArr = [];
+  let fbPathArray = [];
 
 const firebaseConfig = {
   apiKey: "AIzaSyCcsg-O-13sb_sOHRACVDeSdMoeYTaV9Qk",
@@ -19,20 +19,28 @@ const storageRef = app.storage().ref();
 function saveToFirebase() {
   const d = +new Date();
 
-  const name = username + "." + d +".png";
-  // note jpeg not working... TODO
+  const name = username + "." + d + ".jpg";
+  // upload low resolution images
   var uploadCanvas = document.getElementById('uploadLayer');
-  var file = uploadCan.toBlob(function(blob) {
+  var file = uploadCanvas.toBlob(function(blob) {
     var image = new Image();
     image.src = blob;
     storageRef.child(type + "/" + name).put(blob);
-  }, 'image/png', 0.5);
+  }, 'image/jpeg', 0.1);
+  //upload high resolution images
+  const nameHQ = username + "." + d + ".png";
+  var fileHQ = defaultCanvas0.toBlob(function(blob) {
+    var image = new Image();
+    image.src = blob;
+    storageRef.child(type + "HQ/" + nameHQ).put(blob);
+  }, 'image/png', 1);
 };
 
 function getFirebaseImgList() {
 
+fbPathArray = [];
   // locay array to Store all images
-  let fbPathArray = [];
+
 
   // get all paths as a list
   storageRef.child(type + "/").listAll()
@@ -41,30 +49,7 @@ function getFirebaseImgList() {
         //push these to an array
         fbPathArray.push(itemRef.location.path);
       });
-    }).then(() => {
-      reducedArr = [];
-
-
-
-      // Load a qty of images into the array randomly, but don't download them yet
-      let qty = 400;
-      if (fbPathArray.length < 10) {
-        qty = fbPathArray.length;
-      }
-      for (let i = 0; i < qty; i++) {
-        if (drawingPaused){
-        reducedArr.push(fbPathArray[Math.floor(random(0, fbPathArray.length))]);
-        if (i > Math.floor(qty*0.8)){
-          downloadImg(i, qty);
-        }
-      }
-    }
-
-    //todo - do I need drawing paused now??
-
-
-
-    }).catch((error) => {
+    }).then(() => {downloadImg()}).catch((error) => {
       // Uh-oh, an error occurred!
     });
 }
@@ -72,70 +57,76 @@ function getFirebaseImgList() {
 function getFirebaseImgListV2() {
   blendMode(BLEND);
   background(60);
-  image(drawLayer,width*0.4,height*0.4,width*0.2,height*0.2);
+  image(drawLayer, width * 0.4, height * 0.4, width * 0.2, height * 0.2);
   blendMode(OVERLAY);
   tint(255, 255)
-  for (let i = 0; i < reducedArr.length; i++) {
-    if (drawingPaused){
+  for (let i = 0; i < 130; i++) {
     downloadImgSmall(i); // todo - move above
   }
-}
 }
 
 
 function downloadImg(i, qty) {
-  console.log("downloading");
-  // Create a reference to the file we want to download
-  var starsRef = storageRef.child(reducedArr[i]);
 
+  console.log("downloading" + type);
 
+  for (let i = 0; i < 10; i++) {
+    if (drawingPaused) {
+    let nn = Math.floor(random(0, fbPathArray.length));
+    let n = fbPathArray[nn];
+    // Create a reference to the file we want to download
+      var starsRef = storageRef.child(n);
 
-
-  // Get the download URL
-  starsRef.getDownloadURL()
-    .then((url) => {
-      dlImg = loadImage(url, function(loadedImg) {
-      image(loadedImg, width/4, height/4, width/2, height/2);
+    // Get the download URL
+    starsRef.getDownloadURL()
+      .then((url) => {
+        if (drawingPaused){
+        dlImg = loadImage(url, function(loadedImg) {
+              if (drawingPaused){
+        image(loadedImg, width/4, height/4, width/2, height/2);
+      }});
+      }})
+      .catch((error) => {
+        // A full list of error codes is available at
+        // https://firebase.google.com/docs/storage/web/handle-errors
+        switch (error.code) {
+          case 'storage/object-not-found':
+            // File doesn't exist
+            break;
+          case 'storage/unauthorized':
+            // User doesn't have permission to access the object
+            break;
+          case 'storage/canceled':
+            // User canceled the upload
+            break;
+          case 'storage/unknown':
+            // Unknown error occurred, inspect the server response
+            break;
+        }
       });
-    })
-    .catch((error) => {
-      // A full list of error codes is available at
-      // https://firebase.google.com/docs/storage/web/handle-errors
-      switch (error.code) {
-        case 'storage/object-not-found':
-          // File doesn't exist
-          break;
-        case 'storage/unauthorized':
-          // User doesn't have permission to access the object
-          break;
-        case 'storage/canceled':
-          // User canceled the upload
-          break;
-        case 'storage/unknown':
-          // Unknown error occurred, inspect the server response
-          break;
-      }
-    });
-
-// if this loop
-    if (i >= qty-1){
-      console.log("Finished Downloading")
-      setTimeout(getFirebaseImgListV2, 4000);
     }
+  }
+
+
+        setTimeout(getFirebaseImgListV2, 4000);
+
 
 }
 
 function downloadImgSmall(i, qty) {
-  console.log("downloading");
+  console.log("downloading" + type);
   // Create a reference to the file we want to download
-  var starsRef = storageRef.child(reducedArr[i]);
+  let n = fbPathArray[Math.floor(random(0, fbPathArray.length))];
+  var starsRef = storageRef.child(n);
   // Get the download URL
   starsRef.getDownloadURL()
     .then((url) => {
+      if (drawingPaused){
       dlImg = loadImage(url, function(loadedImg) {
-        image(loadedImg, random(0, width*0.85), random(0, height*0.85), width * 0.15, height * 0.15);
-      });
-    })
+            if (drawingPaused){
+        image(loadedImg, random(0, width * 0.85), random(0, height * 0.85), width * 0.15, height * 0.15);
+      }});
+    }})
     .catch((error) => {
       // A full list of error codes is available at
       // https://firebase.google.com/docs/storage/web/handle-errors
