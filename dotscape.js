@@ -34,22 +34,22 @@ function start() {
   if (username.length == 0) {
     username = "anonymous";
   }
-  console.log("A");
+
   $(".loading").remove();
-    console.log("B");
+
   $(".username").remove();
 
   //fullscreen(1);
 
-  console.log("C");
+
   sizeWindow();
-    console.log("D");
+
   writeTextUI();
-    console.log("E");
+
   selectAbrush(1);
-    console.log("F");
+
   linearGrid();
-    console.log("G");
+
   render();
 
   appStarted = 1;
@@ -112,20 +112,26 @@ function windowResized() {
 }
 
 function sizeWindow() {
+  console.log("A");
   resizeCanvas(windowWidth, windowHeight);
   lineLayer.resizeCanvas(windowWidth, windowHeight);
+  console.log("B");
   let aa = createGraphics(windowWidth, windowHeight);
   aa.image(drawLayer, 0, 0, windowWidth, windowHeight)
+  console.log("C");
   drawLayer.resizeCanvas(windowWidth, windowHeight);
   drawLayer = aa;
+    console.log("D");
   aa.remove();
-
+  console.log("E");
   let bb = createGraphics(windowWidth, windowHeight);
   bb.image(dotLayer, 0, 0, windowWidth, windowHeight);
+    console.log("F");
   dotLayer.resizeCanvas(windowWidth, windowHeight);
   dotLayer = bb;
+    console.log("G");
   bb.remove();
-
+  console.log("H");
   dimensionCalc();
   writeTextUI();
 
