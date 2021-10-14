@@ -60,7 +60,7 @@ function getFirebaseImgListV2() {
   image(drawLayer, width * 0.4, height * 0.4, width * 0.2, height * 0.2);
   blendMode(OVERLAY);
   tint(255, 255)
-  for (let i = 0; i < 130; i++) {
+  for (let i = 0; i < 250; i++) {
     downloadImgSmall(i); // todo - move above
   }
 }
@@ -68,7 +68,7 @@ function getFirebaseImgListV2() {
 
 function downloadImg(i, qty) {
 
-  console.log("downloading" + type);
+
 
   for (let i = 0; i < 10; i++) {
     if (drawingPaused) {
@@ -114,7 +114,7 @@ function downloadImg(i, qty) {
 }
 
 function downloadImgSmall(i, qty) {
-  console.log("downloading" + type);
+
   // Create a reference to the file we want to download
   let n = fbPathArray[Math.floor(random(0, fbPathArray.length))];
   var starsRef = storageRef.child(n);
@@ -124,7 +124,7 @@ function downloadImgSmall(i, qty) {
       if (drawingPaused){
       dlImg = loadImage(url, function(loadedImg) {
             if (drawingPaused){
-        image(loadedImg, random(0, width * 0.85), random(0, height * 0.85), width * 0.15, height * 0.15);
+        image(loadedImg, randomGaussian(width/2, width/2), randomGaussian(height/2, height/2), width * 0.25, height * 0.25);
       }});
     }})
     .catch((error) => {

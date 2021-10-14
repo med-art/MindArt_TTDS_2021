@@ -109,27 +109,23 @@ function windowResized() {
 }
 
 function sizeWindow() {
-  console.log("A");
+
   resizeCanvas(windowWidth, windowHeight);
   lineLayer.resizeCanvas(width, height);
-  console.log("B");
+
 aa = createGraphics(width, height);
-    console.log("B2");
-    console.log(aa);
+
   aa.image(drawLayer, 0, 0, width, height)
-  console.log("C");
+
   drawLayer.resizeCanvas(windowWidth, windowHeight);
   drawLayer = aa;
-    console.log("D");
-  console.log("E");
+
   bb = createGraphics(windowWidth, windowHeight);
   bb.image(dotLayer, 0, 0, width, height);
-    console.log("F");
+
   dotLayer.resizeCanvas(windowWidth, windowHeight);
   dotLayer = bb;
-    console.log("G");
 
-  console.log("H");
   dimensionCalc();
   writeTextUI();
 
