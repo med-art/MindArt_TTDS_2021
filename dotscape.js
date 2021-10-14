@@ -61,11 +61,8 @@ function setup() {
   // create canvas and all layers
   createCanvas(windowWidth, windowHeight);
   lineLayer = createGraphics(width, height);
-  lineLayer.id("lineLayer");
   drawLayer = createGraphics(width, height);
-  drawLayer.id("drawLayer");
   dotLayer = createGraphics(width, height);
-  dotLayer.id("dotLayer");
   uploadLayer = createGraphics(500, 500);
   uploadLayer.id("uploadLayer");
 
