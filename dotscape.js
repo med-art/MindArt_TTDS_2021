@@ -39,10 +39,12 @@ function start() {
   $(".username").remove();
 
   //fullscreen(1);
+  alert("hello);
 
+  //
   // sizeWindow();
-  writeTextUI();
-  selectAbrush(1);
+  // writeTextUI();
+  // selectAbrush(1);
   linearGrid();
   render();
 
