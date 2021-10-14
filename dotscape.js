@@ -40,7 +40,7 @@ function start() {
 
   //fullscreen(1);
 
-  sizeWindow();
+  // sizeWindow();
   writeTextUI();
   selectAbrush(1);
   linearGrid();
