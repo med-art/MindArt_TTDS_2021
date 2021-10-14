@@ -124,7 +124,6 @@ aa = createGraphics(width, height);
   drawLayer.resizeCanvas(windowWidth, windowHeight);
   drawLayer = aa;
     console.log("D");
-
   console.log("E");
   bb = createGraphics(windowWidth, windowHeight);
   bb.image(dotLayer, 0, 0, width, height);
